@@ -1,0 +1,48 @@
+<h1 class="appname" >
+  {{langs[language].APPNAME}}
+</h1>
+<div class="head_main_text">
+  <h2 class="sub_appname">
+    {{langs[language].APPNAME2}}
+  </h2>
+</div>
+<div class="home_points_info_wrapper">
+  <div class="home_points_info">
+    <h2 class="info_points">{{langs[language].Yourlevelis}}: <span>{{lvl}}</span> </h2>
+  </div>
+  <div class="home_points_info">
+    <h2 class="info_points"><img class="w_rank" src="img/w_rank.png" alt=""> {{world_wrank}}</h2>
+  </div>
+  <div class="home_points_info" >
+    <h2  class="info_points">{{langs[language].All }} <img alt="" class="points_svg revers" src="img/points.svg"> <span> : {{all_points}}</span> </h2>
+  </div>
+  <div ng-click="buy()" class="home_points_info">
+    <h2 class="info_points">{{langs[language].Buymore}}<img alt="" class="points_svg revers" src="img/points.svg"></h2>
+  </div>
+
+</div>
+
+<div class="menu home_menu" >
+
+  <div class="menu_items_wrapper">
+
+    <a ng-repeat="x in menu" class="menu_items" href="{{menu[$index].href}}">
+          <div class="available" ng-if="menu[$index].available == 'false'">Coming soon</div>
+      <div class="img_wrapper">
+        <div class="index_svg" style="background-image:url('img/{{ menu[$index].ico}}.svg')" ></div>
+      </div>
+      <h3 class="menu_link">
+        {{menu[$index].name[language]}}
+      </h3>
+    </a>
+  </div>
+</div>
+
+<div class="footer tips" id="footer" ng-controller="tips">
+    <p class="f1">
+      {{langs[language].Tipsofaday}}
+    </p>
+    <p class="f2">
+      "{{tips[language][day]}}"
+    </p>
+  </div>
