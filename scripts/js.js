@@ -46,10 +46,14 @@ app.controller('Main', function($scope) {
      var elems = document.querySelectorAll('.modal');
      var instances = M.Modal.init(elems, options);
    });
-
+   document.addEventListener('DOMContentLoaded', function() {
+     var elems = document.querySelectorAll('.datepicker');
+     var instances = M.Datepicker.init(elems, options);
+   });
    // Or with jQuery
 
    $(document).ready(function(){
      $('.modal').modal();
+       $('.datepicker').datepicker();
    });
 });
