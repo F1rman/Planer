@@ -5,13 +5,8 @@
   <script src="scripts/all_scripts.min.js"> </script>
   <script src="scripts/js.js" type="text/javascript"> </script>
   <link href="img/favico.png" rel="shortcut icon" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="css/m.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
   <link href="css/main.css" rel="stylesheet" type="text/css">
   <meta charset="utf-8">
   <title>
@@ -20,11 +15,43 @@
 </head>
 <!-- {{langs[language].APPNAME}} -->
 
-<body>
+<body ng-controller="Main">
 
-<h1>Planner</h1>
-<a class="waves-effect waves-light btn-large"><i class="material-icons left">cloud</i>button</a>
-<script src="scripts/m.js" type="text/javascript"> </script>
+  <h1>Planner</h1>
+
+  <form ng-submit="addToDo()">
+    <label for="todo">I need to </label>
+    <input id="todo" name="todo" type="text" ng-model="formToDo" />
+    <label for="dueDate"> by </label>
+    <input id="dueDate" name="dueDate" type="text" ng-model="formDueDate" placeholder="mm/dd/yy" />
+    <button type="submit"><i class="material-icons">
+        add
+      </i></button>
+  </form>
+
+  <div>
+    <div ng-repeat="toDo in toDos" class="todo-item">
+      <div class="todo-col">{{toDo.description}}</div>
+      <div class="date-col">{{toDo.dueBy | date:'MMM dd, yyyy'}}</div>
+      <div class="delete-col">
+        <i ng-click="removeToDo(toDo)" class="material-icons">
+          delete_outline
+        </i>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="scripts/materialize.min.js"> </script>
 </body>
 
 </html>
