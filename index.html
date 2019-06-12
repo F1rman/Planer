@@ -24,21 +24,38 @@
     <input id="todo" name="todo" type="text" ng-model="formToDo" />
     <label for="dueDate"> by </label>
     <input id="dueDate" name="dueDate" type="text" ng-model="formDueDate" placeholder="mm/dd/yy" />
-    <button type="submit"><i class="material-icons">
+    <button type="submit" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">
         add
       </i></button>
   </form>
 
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
   <div>
-    <div ng-repeat="toDo in toDos" class="todo-item">
+
+      <div ng-repeat="toDo in toDos" class="todo-item">
+          <a class="waves-effect waves-light btn modal-trigger" href="#modal1">
       <div class="todo-col">{{toDo.description}}</div>
+          </a>
       <div class="date-col">{{toDo.dueBy | date:'MMM dd, yyyy'}}</div>
       <div class="delete-col">
-        <i ng-click="removeToDo(toDo)" class="material-icons">
+        <i ng-click="removeToDo(toDo)" class="material-icons fa-trash-o">
           delete_outline
         </i>
       </div>
     </div>
+
 
   </div>
 

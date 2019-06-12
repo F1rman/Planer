@@ -173,104 +173,6 @@
      transform: translateX(0);
    }
  }
- * {
-   box-sizing: border-box;
- }
-
- body {
-   background: #45B29D;
-   color: #F3F3F3;
-   font-family: 'Oswald', sans-serif;
-   font-size: 22px;
- }
- @media (max-width: 400px) {
-   body {
-     font-size: 16px;
-   }
- }
-
- form {
-   text-align: center;
-   margin-bottom: 20px;
- }
-
- input {
-   color: #F3F3F3;
-   padding: 5px;
-   border: 0;
-   border-bottom: 2px solid #F3F3F3;
-   background: transparent;
-   outline: 0;
-   width: 200px;
- }
- input:focus {
-   outline: 0;
- }
- input::-webkit-input-placeholder {
-   color: #cdcdcd;
- }
- input :-moz-placeholder {
-   /* Firefox 18- */
-   color: #cdcdcd;
- }
- input ::-moz-placeholder {
-   /* Firefox 19+ */
-   color: #cdcdcd;
- }
- input :-ms-input-placeholder {
-   color: #cdcdcd;
- }
-
- label, input {
-   margin-right: 10px;
- }
-
- main {
-   padding: 0 40px;
-   margin: 40px auto;
-   overflow: hidden;
-   min-width: 300px;
-   width: 60%;
- }
-
- button {
-   -webkit-transition: all 0.4s ease-in-out;
-   -moz-transition: all 0.4s ease-in-out;
-   transition: all 0.4s ease-in-out;
-   text-align: center;
-   background: #334D5C;
-   border: 4px solid #21323b;
-   height: 48px;
-   width: 48px;
-   text-transform: uppercase;
-   margin: 20px 0;
- }
- button:hover, button:focus {
-   background: #E27A3F;
-   border-color: #cf5f1f;
-   outline: 0;
- }
-
- .todo-col {
-   width: 70%;
- }
-
- .date-col {
-   width: 30%;
- }
-
- .delete-col {
-   width: 40px;
- }
-
- tr {
-   -webkit-transition: all 0.2s ease-in-out;
-   -moz-transition: all 0.2s ease-in-out;
-   transition: all 0.2s ease-in-out;
- }
- tr:nth-child(odd) {
-   background: #3ea08d;
- }
 
  .todo-item.ng-enter {
    -webkit-animation: slideIn 0.4s ease-in-out;
@@ -284,23 +186,16 @@
    animation: bounceOut 0.4s linear;
  }
 
- td {
-   padding: 5px;
- }
-
- tr:hover {
-   background: #DF4949;
- }
-
- .fa-trash-o {
-   cursor: pointer;
- }
  .fa-trash-o:hover {
    -webkit-animation: wiggle 0.4s linear infinite;
    -moz-animation: wiggle 0.4s linear infinite;
    animation: wiggle 0.4s linear infinite;
  }
-
+.fixed_add{
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+}
  img {
    display: block;
    -khtml-user-select: none;
