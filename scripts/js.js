@@ -53,7 +53,6 @@ app.controller('Main', function($scope) {
    // Or with jQuery
 
    $(document).ready(function(){
-     $('.modal').modal();
-       $('.datepicker').datepicker();
+  M.AutoInit();
    });
 });
