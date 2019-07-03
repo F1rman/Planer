@@ -233,16 +233,23 @@ img {
   display: flex;
 }
 
-.fa-trash-o {
-  font-size: 6vmax;
-}
 
-.delete-col {
-  position: absolute;
-  right: 0;
-  top: calc(50% - 3vmax);
-  font-size: 29px;
-}
+
 .relative{
   position: relative;
+}
+
+.progress{
+  position: absolute;
+left: 0;
+margin: 0;
+bottom: 0;
+}
+
+.collapsible-body{
+  position: relative;
+}
+
+.modal.bottom-sheet{
+  max-height: 90%;
 }
