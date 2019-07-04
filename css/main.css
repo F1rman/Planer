@@ -35,10 +35,13 @@ html {
 }
 
 body {
+   overflow: hidden;
   height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  -webkit-backface-visibility: hidden;
+backface-visibility: hidden;
 }
 
 a {
@@ -228,12 +231,100 @@ img {
   -webkit-user-select: none;
   user-select: none;
 }
+.smoothing_text{
+  font-size:  50px ;
+  display: inline-block;
+ text-shadow: 0 0 10px white;
+ -webkit-animation: smoky 15s both;
+ animation: smoky 5s both;
+}
 
+@-webkit-keyframes smoky {
+ 60% {
+ text-shadow: 0 0 40px whitesmoke;
+ }
+ to {
+ -webkit-transform: translate3d(15rem, -8rem, 0) rotate(-40deg) skewX(70deg) scale(1.5);
+ transform: translate3d(15rem, -8rem, 0) rotate(-40deg) skewX(70deg) scale(1.5);
+ text-shadow: 0 0 20px whitesmoke;
+ opacity: 0;
+ }
+}
+
+@keyframes smoky {
+ 60% {
+ text-shadow: 0 0 40px whitesmoke;
+ }
+ to {
+ -webkit-transform: translate3d(15rem, -8rem, 0) rotate(-40deg) skewX(70deg) scale(1.5);
+ transform: translate3d(15rem, -8rem, 0) rotate(-40deg) skewX(70deg) scale(1.5);
+ text-shadow: 0 0 20px whitesmoke;
+ opacity: 0;
+ }
+}
+@-webkit-keyframes smoky-mirror {
+ 60% {
+ text-shadow: 0 0 40px whitesmoke;
+ }
+ to {
+ -webkit-transform: translate3d(18rem, -8rem, 0) rotate(-40deg) skewX(-70deg) scale(2);
+ transform: translate3d(18rem, -8rem, 0) rotate(-40deg) skewX(-70deg) scale(2);
+ text-shadow: 0 0 20px whitesmoke;
+ opacity: 0;
+ }
+}
+@keyframes smoky-mirror {
+ 60% {
+ text-shadow: 0 0 40px whitesmoke;
+ }
+ to {
+ -webkit-transform: translate3d(18rem, -8rem, 0) rotate(-40deg) skewX(-70deg) scale(2);
+ transform: translate3d(18rem, -8rem, 0) rotate(-40deg) skewX(-70deg) scale(2);
+ text-shadow: 0 0 20px whitesmoke;
+ opacity: 0;
+ }
+}
+smoothing_text:nth-of-type(1) {
+ -webkit-animation-delay: 0.1s;
+ animation-delay: 0.1s;
+}
+
+smoothing_text:nth-of-type(2) {
+ -webkit-animation-delay: 0.2s;
+ animation-delay: 0.2s;
+}
+
+smoothing_text:nth-of-type(3) {
+ -webkit-animation-delay: 0.3s;
+ animation-delay: 0.3s;
+}
+
+smoothing_text:nth-of-type(4) {
+ -webkit-animation-delay: 0.4s;
+ animation-delay: 0.4s;
+}
+
+smoothing_text:nth-of-type(5) {
+ -webkit-animation-delay: 0.5s;
+ animation-delay: 0.5s;
+}
+
+smoothing_text:nth-of-type(6) {
+ -webkit-animation-delay: 0.6s;
+ animation-delay: 0.6s;
+}
+
+smoothing_text:nth-of-type(7) {
+ -webkit-animation-delay: 0.7s;
+ animation-delay: 0.7s;
+}
 .flex {
   display: flex;
 }
 
-
+#modal_create{
+  transform: none !important;
+}
 
 .relative{
   position: relative;
