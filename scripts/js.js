@@ -2,7 +2,7 @@ var storage = window.localStorage;
 // storage.removeItem() // Pass a key name to remove that key from storage.
 // storage.setItem('key',val );
 // storage.setItem('passlvl',16);
-
+console.log(storage);
 var d = new Date();
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -12,8 +12,7 @@ var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 app.controller('Main', function($scope) {
   var task_progress = 25;
   var task_color = 'red lighten-3';
-      $scope.toDos = JSON.parse(storage.getItem('tasks'));
-      console.log($scope.toDos);
+
   function check_if_have_tasks_storage() {
       $scope.toDos = JSON.parse(storage.getItem('tasks'));
       console.log($scope.toDos);
