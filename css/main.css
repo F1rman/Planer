@@ -55,13 +55,71 @@ h1 {
 h2 {
   font-size: 2vmax;
 }
+.text-red{
+  color: #ef9a9a;
+}
+.text-yellow{
+  color: #c6ff00;
+}
+.text-blue{
+  color: #90caf9;
+}
+.text-black{
+  color: #616161;
+}
 
 h1, h2, h3 {
   color: #01579b;
   margin: 0;
   padding: 0;
 }
+.fixed-action-btn.toolbar.direction-top ul{
+  display: none;
+}
+.fixed-action-btn.toolbar.direction-top.active ul{
+  display: flex;
+}
+.collapsible-header, .collapsible-body{
+  position: relative;
+}
 
+.collapsible .fixed-action-btn{
+      position: absolute;
+      right: 20px;
+}
+.fixed-action-btn.toolbar{
+  width: 32px;
+  height: 32px;
+}
+.collapsible-header .fixed-action-btn{
+  position: absolute !important;
+}
+.collapsible-header .fixed-action-btn{
+  padding: 0;
+  margin: 0;
+  top: calc(50% - 16px);
+  right: 20px;
+}
+.btn-floating.btn-small{
+  transition: none !important;
+}
+/* .fixed-action-btn.toolbar.direction-top.active .btn-floating.light-blue.lighten-4.btn-small{
+  display: none;
+}
+.fixed-action-btn.toolbar.direction-top .btn-floating.light-blue.lighten-4.btn-small{
+    display: inline-block;
+} */
+.collapsible-header i{
+      width: inherit;
+}
+.collapsible-header .fixed-action-btn i{
+  color: #000;
+}
+.fixed-action-btn.toolbar.direction-top.active{
+top: 0 !important;
+height: 100%;
+bottom: 0;
+}
 @-webkit-keyframes wiggle {
   25% {
     -webkit-transform: rotate(-3deg);

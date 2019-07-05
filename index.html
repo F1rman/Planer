@@ -37,19 +37,38 @@
     <ul class="collapsible">
       <li ng-repeat="toDo in toDos track by $index">
         <div class="collapsible-header">
-          <i class="material-icons">filter_drama</i>
-          {{toDo.title}}
-          <span class="new badge">4</span></div>
-        <div class="collapsible-body">
-          <i ng-click="removeToDo(toDo)" class="material-icons">
-            delete
-          </i>
           <i class="material-icons">
-            edit
-          </i>
+priority_high
+</i>
+          {{toDo.title}}
+
+
+<div  class="fixed-action-btn toolbar">
+  <a class="btn-floating  light-blue lighten-4 btn-small ">
+    <i class="material-icons waves-effect waves-circle  ">
+      more_vert
+    </i>
+  </a>
+  <ul>
+    <li><a class="btn-floating "><i ng-click="removeToDo(toDo)" class="material-icons">
+        delete
+      </i></a></li>
+    <li><a class="btn-floating "> <i class="material-icons">
+        edit
+      </i></a></li>
+    <li><a class="btn-floating "><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating "><i class="material-icons">attach_file</i></a></li>
+  </ul>
+</div>
+
+        </div>
+        <div class="collapsible-body">
+
+
           <p> {{toDo.description}}</p>
           <p>{{toDo.dueBy | date:'MMM dd, yyyy'}}</p>
-          <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+          <p></p>
+          <a class="waves-effect waves-light btn modal-trigger" href="#modal1" ng-click="select($index)">Modal</a>
           <div class="progress">
             <div class="determinate" style="width: {{toDo.progress}}%"></div>
           </div>
@@ -68,15 +87,17 @@
   <!-- Modal bottom -->
   <div id="modal1" class="modal bottom-sheet">
     <div class="container">
+      <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger red " href="#modal_create_small_tasks"><i class="material-icons">add</i></a>
+      <h2>Goals</h2>
       <ul class="collapsible ">
-        <li ng-repeat="toDo in toDos track by $index">
+        <li ng-repeat="e in toDos[0].smaller_tasks track by $index">
           <div class="collapsible-header red lighten-3">
             <i class="material-icons">filter_drama</i>
-            {{toDo.title}}
+            {{toDos[num_task].title}}
             <span class="new badge">4</span></div>
           <div class="collapsible-body">
-            <p> {{toDo.description}}</p>
-            <p>{{toDo.dueBy | date:'MMM dd, yyyy'}}</p>
+            <p> {{toDos[num_task].description}}</p>
+            <p>{{toDos[num_task].dueBy | date:'MMM dd, yyyy'}}</p>
           </div>
         </li>
 
@@ -98,6 +119,8 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
   </div>
+
+
   <div id="modal_create" class="modal">
     <div class="modal-content">
       <h4>Modal Header</h4>
@@ -108,16 +131,36 @@
         <input id="todo" name="todo" type="text" ng-model="formToDoDescription" />
         <label for="dueDate"> by </label>
         <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate">
+        <label ng-repeat="x in important">
+          <input name="group1" type="radio" ng-click="select($index)" />
+          <span class="text-{{important[$index].cl}}">{{important[$index].im}}</span>
+        </label>
         <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
           <i class="material-icons ">
             check
           </i>
         </button>
-
       </form>
-
     </div>
+  </div>
 
+  <div id="modal_create_small_tasks" class="modal">
+    <div class="modal-content">
+      <h4>Add Goals</h4>
+      <form ng-submit="addToTasks()">
+        <label for="todo">I need to </label>
+        <input id="todo" name="todo" type="text" ng-model="formToDoTitle_s" />
+        <label for="todo">description </label>
+        <input id="todo" name="todo" type="text" ng-model="formToDoDescription_s" />
+        <label for="dueDate"> by </label>
+        <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate_s">
+        <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
+          <i class="material-icons ">
+            check
+          </i>
+        </button>
+      </form>
+    </div>
   </div>
 
 
