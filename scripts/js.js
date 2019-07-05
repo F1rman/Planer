@@ -42,6 +42,9 @@ app.controller('Main', function($scope) {
       $scope.no_tasks = true;
       $scope.toDos = []
     }
+    else {
+      return   $scope.toDos = JSON.parse(storage.getItem('tasks'));
+    }
     console.log($scope.toDos);
   }
   check_if_have_tasks_storage()
@@ -63,29 +66,32 @@ app.controller('Main', function($scope) {
   };
 
   function check_smaller_task() {
-    var sm_tasks = JSON.parse(storage.getItem('tasks'))[0].smaller_tasks
+    check_if_have_tasks_storage()
+    var sm_tasks = JSON.parse(storage.getItem('tasks'))[$scope.num_task].smaller_tasks
     if (sm_tasks == undefined || sm_tasks == null || sm_tasks == '[]') {
-      $scope.toDos.smaller_tasks = []
+      $scope.toDos[$scope.num_task].smaller_tasks = []
       $scope.no_smaller_tasks = true;
+      console.log(sm_tasks == undefined || sm_tasks == null || sm_tasks == '[]');
     } else {
-      sm_tasks = JSON.parse(storage.getItem('tasks'))[0].smaller_tasks
+      sm_tasks = JSON.parse(storage.getItem('tasks'))[$scope.num_task].smaller_tasks
     }
   }
-  check_smaller_task()
-  console.log(sm_tasks);
-  $scope.addToTasks = function() {
 
+  // console.log(sm_tasks);
+  $scope.addToTasks = function() {
+    check_smaller_task()
+console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
     var formDueDate_s = Date.parse($scope.formDueDate_s);
     $scope.toDos[$scope.num_task].smaller_tasks.push({
-      title: $scope.formToDoTitle_s,
-      description: $scope.formToDoDescription_s,
-      dueBy: formDueDate_s,
+      title_s: $scope.formToDoTitle_s,
+      description_s: $scope.formToDoDescription_s,
+      dueBy_s: formDueDate_s,
     });
 
     refresh_stor(($scope.toDos))
-    $scope.formToDoTitle_s = '';
-    $scope.formToDoDescription_s = '';
-    $scope.formDueDate_s = '';
+    $scope.title_s = '';
+    $scope.description_s = '';
+    $scope.dueBy_s = '';
   };
 
   $scope.removeToDo = function(toDo) {

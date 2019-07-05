@@ -90,14 +90,14 @@ priority_high
       <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger red " href="#modal_create_small_tasks"><i class="material-icons">add</i></a>
       <h2>Goals</h2>
       <ul class="collapsible ">
-        <li ng-repeat="e in toDos[0].smaller_tasks track by $index">
+        <li ng-repeat="e in toDos[num_task].smaller_tasks track by $index">
           <div class="collapsible-header red lighten-3">
             <i class="material-icons">filter_drama</i>
-            {{toDos[num_task].title}}
+            {{toDos[num_task].smaller_tasks[0].title_s}}
             <span class="new badge">4</span></div>
           <div class="collapsible-body">
-            <p> {{toDos[num_task].description}}</p>
-            <p>{{toDos[num_task].dueBy | date:'MMM dd, yyyy'}}</p>
+            <p> {{toDos[num_task].smaller_tasks[0].description_s}}</p>
+            <p>{{toDos[num_task].smaller_tasks[0].dueBy_s | date:'MMM dd, yyyy'}}</p>
           </div>
         </li>
 
@@ -128,7 +128,7 @@ priority_high
         <label for="todo">I need to </label>
         <input id="todo" name="todo" type="text" ng-model="formToDoTitle" />
         <label for="todo">description </label>
-        <input id="todo" name="todo" type="text" ng-model="formToDoDescription" />
+        <input id="desc" name="desc" type="text" ng-model="formToDoDescription" />
         <label for="dueDate"> by </label>
         <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate">
         <label ng-repeat="x in important">
@@ -151,7 +151,7 @@ priority_high
         <label for="todo">I need to </label>
         <input id="todo" name="todo" type="text" ng-model="formToDoTitle_s" />
         <label for="todo">description </label>
-        <input id="todo" name="todo" type="text" ng-model="formToDoDescription_s" />
+        <input id="desc_small" name="desc_small" type="text" ng-model="formToDoDescription_s" />
         <label for="dueDate"> by </label>
         <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate_s">
         <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
