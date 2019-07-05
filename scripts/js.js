@@ -37,17 +37,21 @@ app.controller('Main', function($scope) {
 
   function check_if_have_tasks_storage() {
     $scope.toDos = JSON.parse(storage.getItem('tasks'));
-    console.log($scope.toDos);
-    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]') {
-      $scope.no_tasks = true;
-      $scope.toDos = []
+    console.log($scope.toDos.length);
+      $scope.toDos.length == 0?  $scope.no_tasks = true: $scope.no_tasks = false;
+console.log($scope.toDos.length);
+    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ) {
+      $scope.toDos = [];
+        $scope.no_tasks = true;
     }
     else {
       return   $scope.toDos = JSON.parse(storage.getItem('tasks'));
     }
-    console.log($scope.toDos);
+
+    console.log($scope.toDos.length);
   }
   check_if_have_tasks_storage()
+
 
   $scope.addToDo = function() {
     var formattedDate = Date.parse($scope.formDueDate);
@@ -57,8 +61,8 @@ app.controller('Main', function($scope) {
       dueBy: formattedDate,
       important: $scope.priority
     });
-    refresh_stor(($scope.toDos))
-    check_if_have_tasks_storage()
+    refresh_stor($scope.toDos)
+  check_if_have_tasks_storage()
     $scope.formToDoTitle = '';
     $scope.formToDoDescription = '';
     $scope.formDueDate = '';
@@ -109,6 +113,16 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
     $('.fixed-action-btn').floatingActionButton({
       toolbarEnabled: true
     });
+    $scope.$watch('toDos',()=>{
+      console.log('toDos');
+      setTimeout(()=>{
+        M.AutoInit();
+        $('.fixed-action-btn').floatingActionButton({
+          toolbarEnabled: true
+        });
+      },20)
+
+    })
 
   });
 });
