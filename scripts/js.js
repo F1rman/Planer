@@ -14,29 +14,33 @@ app.controller('Main', function($scope) {
   var task_color = 'red lighten-3';
   $scope.storage = storage;
   $scope.important = [{
-      'im': 'very hight',
-      'cl': 'red'
+      'im': 'Hight Priority',
+      'cl': 'red',
+      'sm': '!!!'
     },
     {
-      'im': 'hight',
-      'cl': 'yellow'
+      'im': 'Medium Priority',
+      'cl': 'yellow',
+      'sm': '!!'
     },
     {
-      'im': 'medium',
-      'cl': 'blue'
+      'im': 'Low Priority',
+      'cl': 'blue',
+      'sm': '!'
     },
     {
-      'im': 'low',
-      'cl': 'black'
+      'im': 'No Priority',
+      'cl': 'black',
+      'sm': ''
     }
   ]
   $scope.select = (a) => {
     $scope.priority = a;
     $scope.num_task = a;
-    console.log($scope.toDos[$scope.num_task]);
+    console.log(a, 'Selected item');
+    // $scope.check_if_have_small_tasks_storage()
   }
 
-    console.log($scope.toDos)
   function check_if_have_tasks_storage() {
     $scope.toDos = JSON.parse(storage.getItem('tasks'));
     if ($scope.toDos == null) {
@@ -51,24 +55,63 @@ app.controller('Main', function($scope) {
         $scope.toDos = JSON.parse(storage.getItem('tasks'));
     }
 
-    console.log($scope.toDos.length);
   }
   check_if_have_tasks_storage()
-  console.log($scope.toDos)
+// $scope.check_if_have_small_tasks_storage = (a)=>{
+//   console.log($scope.num_task);
+//   $scope.toDos = JSON.parse(storage.getItem('tasks'));
+//   $scope.small_tasks = false
+//   if ($scope.toDos.small_tasks == null || $scope.toDos.small_tasks == undefined) {
+//       $scope.toDos = [];
+//       $scope.small_tasks = false
+//     }
+//     if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
+//       $scope.toDos = [];
+//         $scope.small_tasks = false;
+//     }
+//     else {
+//       $scope.small_tasks = true;
+//         $scope.toDos = JSON.parse(storage.getItem('tasks'));
+//     }
+//     console.log($scope.small_tasks);
+// }
+  // function check_if_have_small_tasks_storage() {
+  //
+  //
+  //
+  //   if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
+  //     $scope.toDos = [];
+  //       $scope.no_tasks = true;
+  //   }
+  //   else {
+  //     $scope.no_tasks = false;
+  //       $scope.toDos = JSON.parse(storage.getItem('tasks'));
+  //   }
+  //
+  // }
+
+  $scope.setDef = (b)=>{
+      $scope.editToDoTitle = $scope.toDos[b].title;
+      $scope.editToDoDescription = $scope.toDos[b].description;
+      $scope.editDueDate = $scope.toDos[b].dueBy;
+  }
 
   $scope.editToDo = function(a) {
-    var editDueDate = Date.parse($scope.editattedDate);
+// $scope.editDueDate = Date.parse($scope.editattedDate);
     $scope.edit_task = a;
 
-console.log($scope.toDos[a], 'asd');
-    //
-    console.log(  $scope.toDos[a].title);
-    $scope.toDos[a].title = $scope.editToDoTitle;
-      $scope.toDos[a].description = $scope.editToDoDescription;
-        $scope.toDos[a].dueBy = editDueDate;
-          $scope.toDos[a].important = $scope.priority;
+    $scope.$watch('editToDoTitle', ()=>{
 
-    refresh_stor($scope.toDos[a])
+      $scope.toDos[a].title = $scope.editToDoTitle;
+    })
+    $scope.$watch('editToDoDescription', ()=>{
+      $scope.toDos[a].description = $scope.editToDoDescription;
+    })
+    $scope.$watch('editToDoTitle', ()=>{
+      $scope.toDos[a].dueBy = $scope.editDueDate
+    })
+
+    refresh_stor($scope.toDos)
   check_if_have_tasks_storage()
 
 
@@ -133,9 +176,13 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
 
    $(document).ready(function() {
      M.AutoInit();
+     $('#todo, #desc').characterCounter();
+
      $scope.$watch('toDos',()=>{
        setTimeout(()=>{
          $('.dropdown-trigger').dropdown()
+         $('#todo, #desc').characterCounter();
+         
        },100)
 
 

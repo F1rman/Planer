@@ -63,7 +63,9 @@ h2 {
 .text-yellow {
   color: #c6ff00;
 }
-
+.collapsible-header{
+  position: relative;
+}
 .text-blue {
   color: #90caf9;
 }
@@ -160,6 +162,7 @@ img {
 
 #modal_create {
   transform: none !important;
+  width: 90% !important;
 }
 
 .relative {
@@ -167,7 +170,7 @@ img {
 }
 .collapsible-header  .dropdown-trigger {
   position: absolute;
-  right: 5%;
+  right: 0%;
 }
 .collapsible-header  .dropdown-content li>a{
   display: flex;
@@ -186,7 +189,12 @@ img {
 .collapsible-body {
   position: relative;
 }
-
+#modal-bottom .modal-trigger{
+  position: absolute;
+bottom: 5%;
+right: 5%;
+}
 .modal.bottom-sheet {
   max-height: 90%;
+  min-height: 50vh;
 }
