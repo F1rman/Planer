@@ -5,13 +5,14 @@ var storage = window.localStorage;
 console.log(storage);
 var d = new Date();
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
+ var toastHTML = '<span>Task successfuly deleted</span><button class="btn-flat toast-action">Undo</button>';
 // ANGULAR
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 
 app.controller('Main', function($scope) {
   var task_progress = 25;
   var task_color = 'red lighten-3';
+  $scope.storage = storage;
   $scope.important = [{
       'im': 'very hight',
       'cl': 'red'
@@ -35,23 +36,43 @@ app.controller('Main', function($scope) {
     console.log($scope.toDos[$scope.num_task]);
   }
 
+    console.log($scope.toDos)
   function check_if_have_tasks_storage() {
     $scope.toDos = JSON.parse(storage.getItem('tasks'));
-    console.log($scope.toDos.length);
-      $scope.toDos.length == 0?  $scope.no_tasks = true: $scope.no_tasks = false;
-console.log($scope.toDos.length);
-    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ) {
+    if ($scope.toDos == null) {
+      $scope.toDos = []
+    }
+    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
       $scope.toDos = [];
         $scope.no_tasks = true;
     }
     else {
-      return   $scope.toDos = JSON.parse(storage.getItem('tasks'));
+      $scope.no_tasks = false;
+        $scope.toDos = JSON.parse(storage.getItem('tasks'));
     }
 
     console.log($scope.toDos.length);
   }
   check_if_have_tasks_storage()
+  console.log($scope.toDos)
 
+  $scope.editToDo = function(a) {
+    var editDueDate = Date.parse($scope.editattedDate);
+    $scope.edit_task = a;
+
+console.log($scope.toDos[a], 'asd');
+    //
+    console.log(  $scope.toDos[a].title);
+    $scope.toDos[a].title = $scope.editToDoTitle;
+      $scope.toDos[a].description = $scope.editToDoDescription;
+        $scope.toDos[a].dueBy = editDueDate;
+          $scope.toDos[a].important = $scope.priority;
+
+    refresh_stor($scope.toDos[a])
+  check_if_have_tasks_storage()
+
+
+  };
 
   $scope.addToDo = function() {
     var formattedDate = Date.parse($scope.formDueDate);
@@ -59,6 +80,7 @@ console.log($scope.toDos.length);
       title: $scope.formToDoTitle,
       description: $scope.formToDoDescription,
       dueBy: formattedDate,
+        progress: 25,
       important: $scope.priority
     });
     refresh_stor($scope.toDos)
@@ -92,7 +114,7 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
       dueBy_s: formDueDate_s,
     });
 
-    refresh_stor(($scope.toDos))
+    refresh_stor($scope.toDos)
     $scope.title_s = '';
     $scope.description_s = '';
     $scope.dueBy_s = '';
@@ -108,21 +130,20 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
   function refresh_stor(a) {
     storage.setItem('tasks', JSON.stringify(a));
   }
-  $(document).ready(function() {
-    M.AutoInit();
-    $('.fixed-action-btn').floatingActionButton({
-      toolbarEnabled: true
-    });
-    $scope.$watch('toDos',()=>{
-      console.log('toDos');
-      setTimeout(()=>{
-        M.AutoInit();
-        $('.fixed-action-btn').floatingActionButton({
-          toolbarEnabled: true
-        });
-      },20)
 
-    })
+   $(document).ready(function() {
+     M.AutoInit();
+     $scope.$watch('toDos',()=>{
+       setTimeout(()=>{
+         $('.dropdown-trigger').dropdown()
+       },100)
 
-  });
+
+
+     })
+
+   });
+
+
+
 });

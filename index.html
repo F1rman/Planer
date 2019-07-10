@@ -17,58 +17,54 @@
 
 <body ng-controller="Main">
   <div class="container">
+    <h1 class="logo_text">Planner</h1>
 
-    <h1>Planner</h1>
-    <!--
-    <span class="smoothing_text">P</span>
-    <span class="smoothing_text">L</span>
-    <span class="smoothing_text">A</span>
-    <span class="smoothing_text">N</span>
-    <span class="smoothing_text">N</span>
-    <span class="smoothing_text">E</span>
-    <span class="smoothing_text">R</span> -->
+    <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger red fixed_add" href="#modal_create" ng-class="{'if_no_tasks_btn': no_tasks == true}"><i class="material-icons"
+        ng-class="{'plus_if_no_tasks': no_tasks == true}">add</i></a>
+
+    <div class="row " ng-if="no_tasks == true">
+      <div class="col s12 m5">
+        <div class="card-panel ">
+          <span class="align-center">No Tasks Available
+          </span>
+        </div>
+      </div>
+    </div>
 
 
-
-    <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger red fixed_add" href="#modal_create"><i class="material-icons">add</i></a>
-
-
-    <h1 ng-if="no_tasks == true">no_tasks</h1>
-    <ul ng-if="no_tasks == false" class="collapsible">
+    <ul ng-show="no_tasks == false" class="collapsible ">
       <li ng-repeat="toDo in toDos track by $index">
         <div class="collapsible-header">
-          <i class="material-icons">
-priority_high
-</i>
+          <i class="material-icons {{important[toDo.important+1].cl}}"> priority_hight </i>
           {{toDo.title}}
 
+          <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown{{$index}}'>
+            <i class="material-icons">more_vert</i>
+          </a>
 
-<div  class="fixed-action-btn toolbar">
-  <a class="btn-floating  light-blue lighten-4 btn-small ">
-    <i class="material-icons waves-effect waves-circle  ">
-      more_vert
-    </i>
-  </a>
-  <ul>
-    <li><a class="btn-floating "><i ng-click="removeToDo(toDo)" class="material-icons">
-        delete
-      </i></a></li>
-    <li><a class="btn-floating "> <i class="material-icons">
-        edit
-      </i></a></li>
-    <li><a class="btn-floating "><i class="material-icons">publish</i></a></li>
-    <li><a class="btn-floating "><i class="material-icons">attach_file</i></a></li>
-  </ul>
-</div>
+          <!-- Dropdown Structure -->
+          <ul id='dropdown{{$index}}' class='dropdown-content'>
+            <li>
+
+              <a class="" ng-click="removeToDo(toDo)" onclick="M.toast({html: toastHTML})"><i  class="material-icons">
+                  delete
+                </i>delete</a></li>
+            <li><a ng-click="editToDo($index)" class="modal-trigger" href="#modal_edit">
+              <i  class="material-icons">
+                  edit
+                </i> edit {{$index}}</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class=" "><i class="material-icons">publish</i>publish</a></li>
+            <li><a class=""><i class="material-icons">attach_file</i>attach_file</a></li>
+          </ul>
 
         </div>
+
         <div class="collapsible-body">
-
-
           <p> {{toDo.description}}</p>
           <p>{{toDo.dueBy | date:'MMM dd, yyyy'}}</p>
           <p></p>
-          <a class="waves-effect waves-light btn modal-trigger" href="#modal1" ng-click="select($index)">Modal</a>
+          <a class="waves-effect waves-teal btn-flat modal-trigger" href="#modal1" ng-click="select($index)">Tasks <span class="badge ">{{toDo.smaller_tasks.length}}</span> </a>
           <div class="progress">
             <div class="determinate" style="width: {{toDo.progress}}%"></div>
           </div>
@@ -82,6 +78,28 @@ priority_high
 
 
 
+    <div id="modal_edit" class="modal">
+      <div  class="modal-content">
+        <h4>Change task</h4>
+        <form ng-submit="editToDo()">
+          <label for="todo">I need to </label>
+          <input id="todo" name="todo" type="text" ng-model="editToDoTitle" ng-value="toDos[edit_task].title" />
+          <label for="todo">description </label>
+          <input id="desc" name="desc" type="text" ng-model="editToDoDescription"  ng-value="toDos[edit_task].description" />
+          <label for="dueDate"> by </label>
+          <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="editattedDate" ng-value="toDos[edit_task].dueBy">
+          <label ng-repeat="x in important">
+            <input name="group1" type="radio" ng-click="select($index)" />
+            <span class="text-{{important[$index].cl}}">{{important[$index].im}}</span>
+          </label>
+          <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
+            <i class="material-icons ">
+              check
+            </i>
+          </button>
+        </form>
+      </div>
+    </div>
 
 
   <!-- Modal bottom -->
@@ -106,19 +124,6 @@ priority_high
   </div>
 
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <div class="row">
-        <div class="col s6">6-columns (one-half)</div>
-        <div class="col s6">6-columns (one-half)</div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
 
 
   <div id="modal_create" class="modal">
