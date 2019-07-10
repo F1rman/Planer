@@ -159,12 +159,21 @@ img {
 .flex {
   display: flex;
 }
-
+#modal_buttons{
+  display: flex;
+justify-content: space-between;
+}
 #modal_create {
   transform: none !important;
-  width: 90% !important;
+  width: 100% !important;
+  height: 100vh !important;
+  max-height: 100%;
+  top: 0 !important;
+  max-width: 1000px;
 }
-
+form .material-icons{
+      margin: 0 0 0 8px;
+}
 .relative {
   position: relative;
 }

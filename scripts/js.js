@@ -35,7 +35,7 @@ app.controller('Main', function($scope) {
     }
   ]
   $scope.select = (a) => {
-    $scope.priority = a;
+
     $scope.num_task = a;
     console.log(a, 'Selected item');
     // $scope.check_if_have_small_tasks_storage()
@@ -119,13 +119,18 @@ app.controller('Main', function($scope) {
 
   $scope.addToDo = function() {
     var formattedDate = Date.parse($scope.formDueDate);
+    console.log($scope.formToDoTitle);
+    if ($scope.formToDoTitle == undefined || $scope.formToDoTitle == null || $scope.formToDoTitle == '' ) {
+        $scope.formToDoTitle = "Default title"
+    }
     $scope.toDos.push({
       title: $scope.formToDoTitle,
       description: $scope.formToDoDescription,
       dueBy: formattedDate,
         progress: 25,
-      important: $scope.priority
+      important:$('#important').val()
     });
+
     refresh_stor($scope.toDos)
   check_if_have_tasks_storage()
     $scope.formToDoTitle = '';
@@ -182,7 +187,7 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
        setTimeout(()=>{
          $('.dropdown-trigger').dropdown()
          $('#todo, #desc').characterCounter();
-         
+
        },100)
 
 

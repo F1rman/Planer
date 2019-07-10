@@ -23,7 +23,7 @@
       <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
         add
       </i>
-      </a>
+    </a>
 
     <div class="row " ng-if="no_tasks == true">
       <div class="col s12 m5">
@@ -39,7 +39,7 @@
     <ul ng-show="no_tasks == false" class="collapsible ">
       <li ng-repeat="toDo in toDos track by $index">
         <div class="collapsible-header">
-      <div class="text-{{important[toDo.important].cl}}">  {{important[toDo.important].sm}}</div>
+          <div class="text-{{important[toDo.important].cl}}"> {{important[toDo.important].sm}}</div>
           {{toDo.title}}
 
           <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown{{$index}}'>
@@ -51,20 +51,20 @@
             <li>
 
               <a class="" ng-click="removeToDo(toDo)" onclick="M.toast({html: toastHTML})">
-                <i  class="material-icons">
+                <i class="material-icons">
                   delete
                 </i>
                 delete
               </a>
-              </li>
+            </li>
             <li>
               <a ng-click="setDef($index);editToDo($index); " class="modal-trigger" href="#modal_edit">
-              <i  class="material-icons">
+                <i class="material-icons">
                   edit
                 </i>
-                 edit {{$index}}
-               </a>
-             </li>
+                edit {{$index}}
+              </a>
+            </li>
             <li class="divider" tabindex="-1"></li>
             <li><a class=" "><i class="material-icons">publish</i>publish</a></li>
             <li><a class=""><i class="material-icons">attach_file</i>pin</a></li>
@@ -74,13 +74,13 @@
 
         <div class="collapsible-body">
           <blockquote>
-     {{toDo.description}}
-   </blockquote>
+            {{toDo.description}}
+          </blockquote>
           <p>{{toDo.dueBy | date:'MMM dd, yyyy'}}</p>
           <a class="waves-effect waves-teal btn modal-trigger" href="#modal-bottom" ng-click="select($index)">
             Tasks
             <span class="badge ">{{toDo.smaller_tasks.length}}</span>
-           </a>
+          </a>
           <div class="progress">
             <div class="determinate" style="width: {{toDo.progress}}%"></div>
           </div>
@@ -94,28 +94,28 @@
 
 
 
-    <div id="modal_edit" class="modal">
-      <div  class="modal-content">
-        <h4>Change task</h4>
-        <form >
-          <label for="todo">I need to </label>
-          <input id="editTodo" name="edittodo" type="text" ng-model="editToDoTitle" ng-value="toDos[edit_task].title" />
-          <label for="todo">description </label>
-          <input id="editTesc" name="editdesc" type="text" ng-model="editToDoDescription"  ng-value="toDos[edit_task].description" />
-          <label for="dueDate"> by </label>
-          <input id="editTueDate" name="editdueDate" type="text" type="text" class="datepicker" ng-model="editattedDate" ng-value="toDos[edit_task].dueBy">
-          <label ng-repeat="x in important">
-            <input name="editgroup1" type="radio" ng-click="select($index)" />
-            <span class="text-{{important[$index].cl}}">{{important[$index].im}}</span>
-          </label>
-          <button ng-click="editToDo()" class="btn waves-effect waves-light flex  modal-close">Save
-            <i class="material-icons ">
-              check
-            </i>
-          </button>
-        </form>
-      </div>
+  <div id="modal_edit" class="modal">
+    <div class="modal-content">
+      <h4>Change task</h4>
+      <form>
+        <label for="todo">I need to </label>
+        <input id="editTodo" name="edittodo" type="text" ng-model="editToDoTitle" ng-value="toDos[edit_task].title" />
+        <label for="todo">description </label>
+        <input id="editTesc" name="editdesc" type="text" ng-model="editToDoDescription" ng-value="toDos[edit_task].description" />
+        <label for="dueDate"> by </label>
+        <input id="editTueDate" name="editdueDate" type="text" type="text" class="datepicker" ng-model="editattedDate" ng-value="toDos[edit_task].dueBy">
+        <label ng-repeat="x in important">
+          <input name="editgroup1" type="radio" ng-click="select($index)" />
+          <span class="text-{{important[$index].cl}}">{{important[$index].im}}</span>
+        </label>
+        <button ng-click="editToDo()" class="btn waves-effect waves-light flex  modal-close">Save
+          <i class="material-icons ">
+            check
+          </i>
+        </button>
+      </form>
     </div>
+  </div>
 
 
   <!-- Modal bottom -->
@@ -127,18 +127,18 @@
         <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
           add
         </i>
-        </a>
-        <div class="row " ng-show="toDos[num_task].smaller_tasks == null">
-          <div class="col s12 m5">
-            <div class="card-panel ">
-              <span class="align-center">
+      </a>
+      <div class="row " ng-show="toDos[num_task].smaller_tasks == null">
+        <div class="col s12 m5">
+          <div class="card-panel ">
+            <span class="align-center">
 
-            No Tasks Available
+              No Tasks Available
 
-              </span>
-            </div>
+            </span>
           </div>
         </div>
+      </div>
       <ul ng-hide="toDos[num_task].smaller_tasks == null" class="collapsible ">
         <li ng-repeat="e in toDos[num_task].smaller_tasks track by $index">
           <div class="collapsible-header red lighten-3">
@@ -160,29 +160,52 @@
 
   <div id="modal_create" class="modal">
     <div class="modal-content">
+      <div class="row">
+        <div class="input-field col s12">
       <h4>Create Task</h4>
+    </div>
+  </div>
       <form ng-submit="addToDo()">
         <div class="row">
-        <label for="todo">I need to </label>
-        <input id="todo" data-length="30" name="todo" type="text" ng-model="formToDoTitle" />
+          <div class="input-field col s12">
+            <label for="todo">Title of task</label>
+            <input id="todo" data-length="30" name="todo" type="text" ng-model="formToDoTitle" />
+          </div>
         </div>
         <div class="row">
-         <div class="input-field col s12">
-           <textarea id="desc" name="desc" class="materialize-textarea" data-length="120" ng-model="formToDoDescription"></textarea>
-           <label for="desc">description</label>
-         </div>
-       </div>
-        <label for="dueDate"> by </label>
-        <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate">
-        <label ng-repeat="x in important">
-          <input name="group1" type="radio" ng-click="select($index)" />
-          <span class="text-{{important[$index].cl}}">{{important[$index].im}}</span>
-        </label>
+          <div class="input-field col s12">
+            <textarea id="desc" name="desc" class="materialize-textarea" data-length="120" ng-model="formToDoDescription"></textarea>
+            <label for="desc">Description of task</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="dueDate">End task by</label>
+            <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select id="important">
+              <option  value="{{$index}}"  ng-repeat="x in important">{{important[$index].sm}} {{important[$index].im}}</option>
+            </select>
+            <label>Important of task</label>
+          </div>
+        </div>
+        <div class="row">
+          <div id="modal_buttons" class="input-field col flex s12">
         <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
           <i class="material-icons ">
             check
           </i>
         </button>
+        <div  class="btn waves-effect waves-light flex  modal-close">Cancel
+          <i class="material-icons ">
+            cancel
+          </i>
+        </div>
+      </div>
+    </div>
       </form>
     </div>
   </div>
