@@ -30,7 +30,7 @@
 }
 
 html {
-  background: #e1f5fe;
+  /* background: #e1f5fe; */
   font-family: 'Lato', sans-serif;
 }
 
@@ -64,6 +64,8 @@ h2 {
   color: #c6ff00;
 }
 .collapsible-header{
+  display: flex;
+align-items: center;
   position: relative;
 }
 .text-blue {
@@ -73,15 +75,24 @@ h2 {
 .text-black {
   color: #616161;
 }
-
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+}
 h1, h2, h3 {
-  color: #01579b;
+  /* color: #01579b; */
   margin: 0;
   padding: 0;
 }
+.h2_small_tasks{
+  margin: 1rem !important;
 
+}
 .logo_text {
   font-size: 50px;
+  text-align: center;
+}
+.align-center{
   text-align: center;
 }
 
@@ -91,8 +102,16 @@ h1, h2, h3 {
   align-items: center;
   justify-content: space-between;
 }
-
-
+.collapsible-header>div{
+  justify-content: space-between;
+width: 50px;
+display: flex;
+margin: 0 10px 0 0;
+align-items: center;
+}
+.collapsible-header>div>.material-icons{
+  margin-right: 5px;
+}
 .fixed_add {
   position: fixed;
   top: calc(98% - 56px);
@@ -163,7 +182,7 @@ img {
   display: flex;
 justify-content: space-between;
 }
-#modal_create {
+#modal_create, #modal_edit {
   transform: none !important;
   width: 100% !important;
   height: 100vh !important;
@@ -177,9 +196,27 @@ form .material-icons{
 .relative {
   position: relative;
 }
+#to_time{
+  display: flex;
+  align-items: center;
+}
+#to_time i{
+  margin-right: 5px;
+}
 .collapsible-header  .dropdown-trigger {
   position: absolute;
   right: 0%;
+}
+blockquote{
+  overflow: hidden !important;
+}
+.collapsible-header p {
+display: inline;
+white-space: normal;
+margin: 0;
+text-overflow: ellipsis;
+overflow: hidden;
+width: calc(100% - 100px);
 }
 .collapsible-header  .dropdown-content li>a{
   display: flex;
@@ -187,6 +224,11 @@ form .material-icons{
 }
 .collapsible-header  .dropdown-content li>a>i{
   margin-right: 0px;
+}
+.on_progress{
+  position: absolute;
+right: 0;
+bottom: 5px;
 }
 .progress {
   position: absolute;
@@ -205,5 +247,5 @@ right: 5%;
 }
 .modal.bottom-sheet {
   max-height: 90%;
-  min-height: 50vh;
+  min-height: 90vh;
 }

@@ -5,7 +5,7 @@ var storage = window.localStorage;
 console.log(storage);
 var d = new Date();
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
- var toastHTML = '<span>Task successfuly deleted</span><button class="btn-flat toast-action">Undo</button>';
+var toastHTML = '<span>Task successfuly deleted</span><button class="btn-flat toast-action">Undo</button>';
 // ANGULAR
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 
@@ -35,10 +35,11 @@ app.controller('Main', function($scope) {
     }
   ]
   $scope.select = (a) => {
-
     $scope.num_task = a;
     console.log(a, 'Selected item');
-    // $scope.check_if_have_small_tasks_storage()
+    $scope.editToDoTitle = $scope.toDos[a].title
+    $scope.editToDoDescription = $scope.toDos[a].description
+    $scope.editDueDate = $scope.toDos[a].dueBy
   }
 
   function check_if_have_tasks_storage() {
@@ -46,97 +47,55 @@ app.controller('Main', function($scope) {
     if ($scope.toDos == null) {
       $scope.toDos = []
     }
-    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
+    if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' || $scope.toDos.length == 0) {
       $scope.toDos = [];
-        $scope.no_tasks = true;
-    }
-    else {
+      $scope.no_tasks = true;
+    } else {
       $scope.no_tasks = false;
-        $scope.toDos = JSON.parse(storage.getItem('tasks'));
+      $scope.toDos = JSON.parse(storage.getItem('tasks'));
     }
 
   }
   check_if_have_tasks_storage()
-// $scope.check_if_have_small_tasks_storage = (a)=>{
-//   console.log($scope.num_task);
-//   $scope.toDos = JSON.parse(storage.getItem('tasks'));
-//   $scope.small_tasks = false
-//   if ($scope.toDos.small_tasks == null || $scope.toDos.small_tasks == undefined) {
-//       $scope.toDos = [];
-//       $scope.small_tasks = false
-//     }
-//     if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
-//       $scope.toDos = [];
-//         $scope.small_tasks = false;
-//     }
-//     else {
-//       $scope.small_tasks = true;
-//         $scope.toDos = JSON.parse(storage.getItem('tasks'));
-//     }
-//     console.log($scope.small_tasks);
-// }
-  // function check_if_have_small_tasks_storage() {
-  //
-  //
-  //
-  //   if (storage.getItem('tasks') == undefined || storage.getItem('tasks') == null || storage.getItem('tasks') == '[]' ||   $scope.toDos.length == 0) {
-  //     $scope.toDos = [];
-  //       $scope.no_tasks = true;
-  //   }
-  //   else {
-  //     $scope.no_tasks = false;
-  //       $scope.toDos = JSON.parse(storage.getItem('tasks'));
-  //   }
-  //
-  // }
 
-  $scope.setDef = (b)=>{
-      $scope.editToDoTitle = $scope.toDos[b].title;
-      $scope.editToDoDescription = $scope.toDos[b].description;
-      $scope.editDueDate = $scope.toDos[b].dueBy;
-  }
-
-  $scope.editToDo = function(a) {
-// $scope.editDueDate = Date.parse($scope.editattedDate);
-    $scope.edit_task = a;
-
-    $scope.$watch('editToDoTitle', ()=>{
-
-      $scope.toDos[a].title = $scope.editToDoTitle;
-    })
-    $scope.$watch('editToDoDescription', ()=>{
-      $scope.toDos[a].description = $scope.editToDoDescription;
-    })
-    $scope.$watch('editToDoTitle', ()=>{
-      $scope.toDos[a].dueBy = $scope.editDueDate
-    })
-
+  $scope.$watch('editToDoTitle', () => {
+    console.log($scope.editToDoTitle);
+  })
+  $scope.changeTodo = (a) => {
+    $scope.toDos[a].title = $scope.editToDoTitle;
+    $scope.toDos[a].description = $scope.editToDoDescription;
+    $scope.toDos[a].dueBy = $scope.editDueDate
     refresh_stor($scope.toDos)
-  check_if_have_tasks_storage()
+    check_if_have_tasks_storage()
+  }
+  $scope.editToDo = function(a) {
+    // $scope.editDueDate = Date.parse($scope.editattedDate);
+    console.log($scope.edit_task);
+
 
 
   };
-
   $scope.addToDo = function() {
-    var formattedDate = Date.parse($scope.formDueDate);
+    var formattedDate = $scope.formDueDate + ' ' + $scope.formDueTime;
+    console.log(formattedDate);
     console.log($scope.formToDoTitle);
-    if ($scope.formToDoTitle == undefined || $scope.formToDoTitle == null || $scope.formToDoTitle == '' ) {
-        $scope.formToDoTitle = "Default title"
+    if ($scope.formToDoTitle == undefined || $scope.formToDoTitle == null || $scope.formToDoTitle == '') {
+      $scope.formToDoTitle = "Default title"
     }
     $scope.toDos.push({
       title: $scope.formToDoTitle,
       description: $scope.formToDoDescription,
       dueBy: formattedDate,
-        progress: 25,
-      important:$('#important').val()
+      progress: 25,
+      important: $('#important').val()
     });
 
     refresh_stor($scope.toDos)
-  check_if_have_tasks_storage()
+    check_if_have_tasks_storage()
     $scope.formToDoTitle = '';
     $scope.formToDoDescription = '';
     $scope.formDueDate = '';
-
+    $scope.formDueTime = '';
   };
 
   function check_smaller_task() {
@@ -154,7 +113,7 @@ app.controller('Main', function($scope) {
   // console.log(sm_tasks);
   $scope.addToTasks = function() {
     check_smaller_task()
-console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
+    console.log($scope.toDos[$scope.num_task].smaller_tasks);
     var formDueDate_s = Date.parse($scope.formDueDate_s);
     $scope.toDos[$scope.num_task].smaller_tasks.push({
       title_s: $scope.formToDoTitle_s,
@@ -179,22 +138,33 @@ console.log(  $scope.toDos[$scope.num_task].smaller_tasks);
     storage.setItem('tasks', JSON.stringify(a));
   }
 
-   $(document).ready(function() {
-     M.AutoInit();
-     $('#todo, #desc').characterCounter();
+  $(document).ready(function() {
+    M.AutoInit();
+    $('#todo, #desc').characterCounter();
+    $('.timepicker').timepicker({
+      'twelveHour': false
+    });
+    $('.datepicker').datepicker({
+      'minDate': d
+    });
+    $scope.$watch('toDos', () => {
+      setTimeout(() => {
+        $('.dropdown-trigger').dropdown()
+        $('#todo, #desc').characterCounter();
+        $('.timepicker').timepicker({
+          'twelveHour': false
+        });
+        $('.datepicker').datepicker({
+          'minDate': d
+        });
 
-     $scope.$watch('toDos',()=>{
-       setTimeout(()=>{
-         $('.dropdown-trigger').dropdown()
-         $('#todo, #desc').characterCounter();
-
-       },100)
+      }, 100)
 
 
 
-     })
+    })
 
-   });
+  });
 
 
 
