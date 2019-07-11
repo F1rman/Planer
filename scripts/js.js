@@ -5,13 +5,16 @@ var storage = window.localStorage;
 console.log(storage);
 var d = new Date();
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-var toastHTML = '<span>Task successfuly deleted</span><button class="btn-flat toast-action">Undo</button>';
 // ANGULAR
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 
 app.controller('Main', function($scope) {
   var task_progress = 25;
+  var del_task_timer;
   var task_color = 'red lighten-3';
+
+
+
   $scope.storage = storage;
   $scope.important = [{
       'im': 'Hight Priority',
@@ -62,7 +65,7 @@ app.controller('Main', function($scope) {
   check_if_have_tasks_storage()
 
   $scope.$watch('formToDoTitle', () => {
-  console.log($('#important').val());
+    console.log($('#important').val());
   })
   $scope.changeTodo = (a) => {
     $scope.toDos[a].title = $scope.editToDoTitle;
@@ -89,12 +92,15 @@ app.controller('Main', function($scope) {
       important: $('#important').val()
     });
 
+
     refresh_stor($scope.toDos)
     check_if_have_tasks_storage()
     $scope.formToDoTitle = '';
     $scope.formToDoDescription = '';
     $scope.formDueDate = '';
     $scope.formDueTime = '';
+    M.toast({html: 'Task successfuly created'})
+    
   };
 
   function check_smaller_task() {
@@ -126,11 +132,31 @@ app.controller('Main', function($scope) {
     $scope.dueBy_s = '';
   };
 
+
   $scope.removeToDo = function(toDo) {
-    var index = $scope.toDos.indexOf(toDo);
-    $scope.toDos.splice(index, 1);
-    refresh_stor($scope.toDos)
-    check_if_have_tasks_storage()
+    $('.li' + $scope.toDos.indexOf(toDo)).slideUp();
+    del_task_timer = setTimeout(() => {
+      var index = $scope.toDos.indexOf(toDo);
+      $scope.toDos.splice(index, 1);
+      refresh_stor($scope.toDos)
+      check_if_have_tasks_storage()
+    }, 5000)
+    console.log($scope.toDos.indexOf(toDo));
+    var toastHTML = '<span>Task successfuly deleted</span><button id="undo" class="btn-flat toast-action">Undo</button>';
+    M.toast({
+      html: toastHTML,
+      displayLength: 5000
+    });
+    $("body").on('click', '#undo', function() {
+      $(this).addClass("undo");
+      var toastElement = document.querySelector('.toast');
+      var toastInstance = M.Toast.getInstance(toastElement);
+      clearTimeout(del_task_timer);
+      $('.li' + $scope.toDos.indexOf(toDo)).slideDown();
+      console.log(del_task_timer);
+      //undofunction();
+
+    });
   };
 
   function refresh_stor(a) {
@@ -138,6 +164,12 @@ app.controller('Main', function($scope) {
   }
 
   $(document).ready(function() {
+
+    $('#del').click(() => {
+      console.log("UNDO CLICKED")
+      $('#del').remove();
+    })
+
     M.AutoInit();
     $('#todo, #desc').characterCounter();
     $('.timepicker').timepicker({

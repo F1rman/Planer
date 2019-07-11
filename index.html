@@ -17,7 +17,7 @@
 
 <body ng-controller="Main">
   <div class="container">
-    <h1 class="logo_text">Planner</h1>
+    <h1  class="logo_text">Planner</h1>
 
     <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger teal fixed_add" href="#modal_create" ng-class="{'if_no_tasks_btn': no_tasks == true}">
       <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
@@ -36,8 +36,8 @@
     </div>
 
 
-    <ul ng-show="no_tasks == false" class="collapsible ">
-      <li class="active" ng-repeat="toDo in toDos track by $index">
+    <ul ng-show="no_tasks == false" class="collapsible " id="collapsible ">
+      <li class="active li{{$index}}"  ng-repeat="toDo in toDos track by $index">
         <div class="collapsible-header">
           <div class="text-{{important[toDo.important].cl}}">
             <span class="flow-text"> {{important[toDo.important].sm}}</span>
@@ -66,7 +66,7 @@
             </li>
             <li>
 
-              <a class="" ng-click="removeToDo(toDo)" onclick="M.toast({html: toastHTML})">
+              <a class="" ng-click="removeToDo(toDo)" >
                 <i class="material-icons">
                   delete
                 </i>
