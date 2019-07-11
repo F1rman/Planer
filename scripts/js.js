@@ -4,7 +4,6 @@ var storage = window.localStorage;
 // storage.setItem('passlvl',16);
 console.log(storage);
 var d = new Date();
-var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 // ANGULAR
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 
@@ -64,19 +63,16 @@ app.controller('Main', function($scope) {
   }
   check_if_have_tasks_storage()
 
-  $scope.$watch('formToDoTitle', () => {
-    console.log($('#important').val());
-  })
+
   $scope.changeTodo = (a) => {
     $scope.toDos[a].title = $scope.editToDoTitle;
     $scope.toDos[a].description = $scope.editToDoDescription;
     $scope.toDos[a].dueByDate = $scope.editattedDate;
     $scope.toDos[a].dueByTime = $scope.editformDueTime;
     $scope.toDos[a].important = $('#important_edit').val();
-
-
     refresh_stor($scope.toDos)
     check_if_have_tasks_storage()
+    M.toast({html: 'Task successfuly changed'})
   }
 
   $scope.addToDo = function() {
@@ -100,7 +96,7 @@ app.controller('Main', function($scope) {
     $scope.formDueDate = '';
     $scope.formDueTime = '';
     M.toast({html: 'Task successfuly created'})
-    
+
   };
 
   function check_smaller_task() {
@@ -116,7 +112,7 @@ app.controller('Main', function($scope) {
   }
 
   // console.log(sm_tasks);
-  $scope.addToTasks = function() {
+  $scope.addSmallTasks = function() {
     check_smaller_task()
     console.log($scope.toDos[$scope.num_task].smaller_tasks);
     var formDueDate_s = Date.parse($scope.formDueDate_s);

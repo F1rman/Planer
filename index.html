@@ -17,7 +17,7 @@
 
 <body ng-controller="Main">
   <div class="container">
-    <h1  class="logo_text">Planner</h1>
+    <h1 class="logo_text">Planner</h1>
 
     <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger teal fixed_add" href="#modal_create" ng-class="{'if_no_tasks_btn': no_tasks == true}">
       <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
@@ -37,7 +37,7 @@
 
 
     <ul ng-show="no_tasks == false" class="collapsible " id="collapsible ">
-      <li class="active li{{$index}}"  ng-repeat="toDo in toDos track by $index">
+      <li class="active li{{$index}}" ng-repeat="toDo in toDos track by $index">
         <div class="collapsible-header">
           <div class="text-{{important[toDo.important].cl}}">
             <span class="flow-text"> {{important[toDo.important].sm}}</span>
@@ -66,7 +66,7 @@
             </li>
             <li>
 
-              <a class="" ng-click="removeToDo(toDo)" >
+              <a class="" ng-click="removeToDo(toDo)">
                 <i class="material-icons">
                   delete
                 </i>
@@ -78,21 +78,32 @@
         </div>
 
         <div class="collapsible-body">
-          <label for="description_bq">Description:</label>
-          <blockquote id="#description_bq"> {{toDo.description}}</blockquote>
-        <label for="to_time">to_time:</label>
-          <p id="to_time">
+          <div class="row">
+            <label for="description_bq">Description of task:</label>
+            <blockquote id="#description_bq"> {{toDo.description}}</blockquote>
+          </div>
+          <div class="row">
+            <label for="to_time">Must be done by the:</label>
+            <p id="to_time">
 
-            <i class="material-icons">
-              access_time
-            </i>{{toDo.dueByDate | date:'MMM dd, yyyy'}} {{toDo.dueByTime}}</p>
-          <a class="waves-effect waves-teal btn modal-trigger" href="#modal-bottom" ng-click="select($index)">
-            {{toDo.smaller_tasks.length?'To-do list':'Create list'}}
-          </a>
-          <span class="badge on_progress">0/{{toDo.smaller_tasks.length? toDo.smaller_tasks.length:0}}</span>
+              <i class="material-icons">
+                access_time
+              </i>{{toDo.dueByDate | date:'MMM dd, yyyy'}} {{toDo.dueByTime}}
+            </p>
+          </div>
+          <div class="row">
+            <label for="complete_task">To complete this task:</label>
+            <p id="complete_task">{{toDo.smaller_tasks.length? 'Need end ' + toDo.smaller_tasks.length + ' Task': '' }}</p>
+
+            <a class="waves-effect waves-white btn-flat modal-trigger" href="#modal-bottom" ng-click="select($index)">
+              {{toDo.smaller_tasks.length?'SHOW':'Create list'}}
+            </a>
+          </div>
+
+
 
           <div class="progress">
-            <div class="determinate" style="width: calc(100% / {{toDo.smaller_tasks.length}})"></div>
+            <div class="determinate"></div>
           </div>
 
         </div>
@@ -114,25 +125,25 @@
       <form name="form_edit">
         <div class="row">
           <div class="input-field col s12">
-            <input id="edittodo" ng-model="editToDoTitle" name="edittodo"  maxlength="30" data-length="30" type="text"  />
-            <span class="helper-text" >Title of task</span>
+            <input id="edittodo" ng-model="editToDoTitle" name="edittodo" maxlength="30" data-length="30" type="text" />
+            <span class="helper-text">Title of task</span>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea name="editdesc" type="text" ng-model="editToDoDescription"  maxlength="120" class="materialize-textarea" data-length="120" ></textarea>
-            <span class="helper-text" >Description of task</span>
+            <textarea name="editdesc" type="text" ng-model="editToDoDescription" maxlength="120" class="materialize-textarea" data-length="120"></textarea>
+            <span class="helper-text">Description of task</span>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
 
-            <input id="editDueDate" name="editdueDate" type="text"  class="datepicker" ng-model="editattedDate" >
-            <span class="helper-text" >End task by Date</span>
+            <input id="editDueDate" name="editdueDate" type="text" class="datepicker" ng-model="editattedDate">
+            <span class="helper-text">End task by Date</span>
           </div>
           <div class="input-field col s6">
-            <input id="editDueTime" name="editdueTime" type="text" class="timepicker" ng-model="editformDueTime" >
-            <span class="helper-text" >End task by Time</span>
+            <input id="editDueTime" name="editdueTime" type="text" class="timepicker" ng-model="editformDueTime">
+            <span class="helper-text">End task by Time</span>
           </div>
         </div>
         <div class="row">
@@ -150,7 +161,7 @@
                 close
               </i>
             </div>
-            <button  ng-click="changeTodo(num_task)" type="button" class="btn waves-effect waves-light flex  modal-close">Save
+            <button ng-click="changeTodo(num_task)" type="button" class="btn waves-effect waves-light flex  modal-close">Save
               <i class="material-icons ">
                 check
               </i>
@@ -170,7 +181,7 @@
     <div class="container">
       <h2 class="flow-text h2_small_tasks align-center">{{toDos[num_task].title}}</h2>
 
-      <a class="btn-floating btn-large waves-effect waves-light btn modal-trigger red " href="#modal_create_small_tasks" ng-class="{'if_no_tasks_btn': toDos[num_task].smaller_tasks == null}">
+      <a id="add_small_task" class="btn-floating btn-large waves-effect waves-light btn modal-trigger teal " href="#modal_create_small_tasks" ng-class="{'if_no_tasks_btn': toDos[num_task].smaller_tasks == null}">
         <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
           add
         </i>
@@ -179,25 +190,68 @@
         <div class="col s12 ">
           <div class="card-panel ">
             <span class="align-center">
-
               No Goals Available
-
             </span>
           </div>
         </div>
       </div>
       <ul ng-hide="toDos[num_task].smaller_tasks == null" class="collapsible ">
-        <li ng-repeat="e in toDos[num_task].smaller_tasks track by $index">
-          <div class="collapsible-header red lighten-3">
-            <i class="material-icons">filter_drama</i>
-            {{toDos[num_task].smaller_tasks[0].title_s}}
-            <span class="new badge">4</span></div>
+        <li class="active li{{$index}}" ng-repeat="f in toDos[num_task].smaller_tasks track by $index">
+          <div class="collapsible-header">
+            <div class="text-{{important[toDo.important].cl}}">
+              <span class="flow-text"> {{important[toDo.important].sm}}</span>
+              <i class="material-icons">whatshot</i>
+            </div>
+            <p class="flow-text">{{toDos[num_task].smaller_tasks[0].title_s}}</p>
+
+            <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown_small{{$index}}'>
+              <i class="material-icons">more_vert</i>
+            </a>
+
+            <!-- Dropdown Structure -->
+            <ul id='dropdown_small{{$index}}' class='dropdown-content'>
+              <li>
+                <a ng-click="select($index); " class="modal-trigger" href="#modal_edit_small">
+                  <i class="material-icons">
+                    edit
+                  </i>
+                  edit
+                </a>
+              </li>
+              <li>
+                <a class="" ng-click="removeToDo(toDo)">
+                  <i class="material-icons">
+                    delete
+                  </i>
+                  delete
+                </a>
+              </li>
+            </ul>
+          </div>
+
           <div class="collapsible-body">
-            <p> {{toDos[num_task].smaller_tasks[0].description_s}}</p>
-            <p>{{toDos[num_task].smaller_tasks[0].dueBy_s | date:'MMM dd, yyyy'}}</p>
+            <div class="row">
+              <label for="description_bq">Description of task:</label>
+              <blockquote id="#description_bq"> {{toDos[num_task].smaller_tasks[0].description_s}}</blockquote>
+            </div>
+            <div class="row">
+              <label for="to_time">Must be done by the:</label>
+              <p id="to_time">
+
+                <i class="material-icons">
+                  access_time
+                </i>{{toDos[num_task].smaller_tasks[0].dueByDate_s | date:'MMM dd, yyyy'}}{{toDos[num_task].smaller_tasks[0].dueByTime_s}}
+              </p>
+            </div>
+            <div class="row">
+              asdas
+            </div>
+            <div class="progress">
+              <div class="determinate"></div>
+            </div>
+
           </div>
         </li>
-
       </ul>
     </div>
   </div>
@@ -264,19 +318,43 @@
 
   <div id="modal_create_small_tasks" class="modal">
     <div class="modal-content">
-      <h4>Add Goals</h4>
-      <form ng-submit="addToTasks()">
-        <label for="todo">I need to </label>
-        <input id="todo" name="todo" type="text" ng-model="formToDoTitle_s" />
-        <label for="todo">description </label>
-        <input id="desc_small" name="desc_small" type="text" ng-model="formToDoDescription_s" />
-        <label for="dueDate"> by </label>
-        <input id="dueDate" name="dueDate" type="text" type="text" class="datepicker" ng-model="formDueDate_s">
-        <button type="submit" class="btn waves-effect waves-light flex  modal-close">Create
-          <i class="material-icons ">
-            check
-          </i>
-        </button>
+      <div class="row">
+        <div class="input-field col s12">
+          <h4>Create goals for Task</h4>
+        </div>
+      </div>
+      <form name="form_small_task">
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="todo_small">Title of task</label>
+            <input id="todo_small" required maxlength="30" data-length="30" name="todo_small" type="text" ng-model="formToDoTitle_small" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="desc_small" required name="desc_small" maxlength="120" class="materialize-textarea" data-length="120" ng-model="formToDoDescription_small"></textarea>
+            <label for="desc_small">Description of task</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <label for="dueDate_small">End task by Date</label>
+            <input id="dueDate_small" required name="dueByDate_small" type="text" class="datepicker" ng-model="formDueDate_small">
+          </div>
+          <div class="input-field col s6">
+            <label for="dueTime_small">End task by Time</label>
+            <input id="dueTime_small" type="text" class="timepicker" ng-model="formDueTime_small">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <button ng-click="addSmallTasks()" class="btn waves-effect waves-light flex  modal-close">Create
+              <i class="material-icons ">
+                check
+              </i>
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
