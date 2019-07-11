@@ -36,10 +36,12 @@ app.controller('Main', function($scope) {
   ]
   $scope.select = (a) => {
     $scope.num_task = a;
+    $scope.priority = a;
     console.log(a, 'Selected item');
     $scope.editToDoTitle = $scope.toDos[a].title
     $scope.editToDoDescription = $scope.toDos[a].description
     $scope.editDueDate = $scope.toDos[a].dueBy
+    $('#important_edit').value = $scope.toDos[a].important
   }
 
   function check_if_have_tasks_storage() {
@@ -58,27 +60,22 @@ app.controller('Main', function($scope) {
   }
   check_if_have_tasks_storage()
 
-  $scope.$watch('editToDoTitle', () => {
-    console.log($scope.editToDoTitle);
+  $scope.$watch('formToDoTitle', () => {
+  console.log($('#important').val());
   })
   $scope.changeTodo = (a) => {
     $scope.toDos[a].title = $scope.editToDoTitle;
     $scope.toDos[a].description = $scope.editToDoDescription;
     $scope.toDos[a].dueBy = $scope.editDueDate
+    $scope.toDos[a].important = $('#important_edit').val()
+
     refresh_stor($scope.toDos)
     check_if_have_tasks_storage()
   }
-  $scope.editToDo = function(a) {
-    // $scope.editDueDate = Date.parse($scope.editattedDate);
-    console.log($scope.edit_task);
 
-
-
-  };
   $scope.addToDo = function() {
     var formattedDate = $scope.formDueDate + ' ' + $scope.formDueTime;
     console.log(formattedDate);
-    console.log($scope.formToDoTitle);
     if ($scope.formToDoTitle == undefined || $scope.formToDoTitle == null || $scope.formToDoTitle == '') {
       $scope.formToDoTitle = "Default title"
     }
