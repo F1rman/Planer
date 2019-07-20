@@ -136,24 +136,33 @@ h2 {
 #collapsible {
   box-shadow: none !important;
   position: relative;
-  left: 10%;
+  left: 0%;
   border: none;
-  margin-top: 20%;
-  border-radius: 100px 0 0 100px;
+  margin-top: 20px;
+  padding: 20px 0;
+  padding-left: 15%;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 50vh;
 }
 
 #collapsible li {
+  box-shadow: 0 0 20px #000 !important;
   color: white;
-  padding: 20px;
-  box-shadow: none;
-  background: #979797;
-  border-radius: 100px 0 0 100px;
+  padding: 10px 50px 10px 30px;
+  background: #3c3c3c;
+  display: flex;
+  border-radius: 40px;
   border-bottom: none;
+  flex: none;
+  position: relative;
+  width: 350px;
   margin-bottom: 20px;
+  flex-flow: column;
+  justify-content: flex-start;
 }
-
-.collapsible-header:active {
-  background: #979797;
+#collapsible li p {
+  margin: 5px 0;
 }
 
 .waves-effect.waves-plan .waves-ripple {
@@ -352,16 +361,19 @@ h2 {
   align-items: center;
 }
 
-.collapsible .collapsible-header {
-  display: flex;
-  align-items: center;
-  position: relative;
-  box-shadow: none;
-  background: transparent;
-  border-radius: 100px 0 0 100px;
-  border-bottom: none;
-}
+#collapsible li{
+  transition: all .5s cubic-bezier(.76,.09,.59,1.4) !important;
 
+}
+#collapsible li.ng-hide{
+  transform: translateX(-200%);
+  transition: all 0s cubic-bezier(.76,.09,.59,1.4) !important;
+}
+#collapsible li.ng-show{
+  transform: translateX(200%);
+  position: relative;
+  transition: all .5s cubic-bezier(.76,.09,.59,1.4) !important;
+}
 .text-blue {
   color: #90caf9;
 }
@@ -369,7 +381,15 @@ h2 {
 .text-black {
   color: #616161;
 }
-
+.bg-0 {
+background: linear-gradient(305deg, rgba(0,0,0,1) 0%, rgba(157,157,157,1) 100%) !important;
+}
+.bg-1 {
+background: linear-gradient(305deg, rgba(255,252,0,1) 0%, rgba(123,123,123,1) 100%) !important;
+}
+.bg-2 {
+background: linear-gradient(305deg, rgba(0,245,255,1) 0%, rgba(136,139,79,1) 100%) !important;
+}
 .dropdown-trigger {
   display: flex;
   align-items: center;
@@ -413,24 +433,13 @@ h1, h2, h3 {
   color: white;
 }
 
-.collapsible-header>div {
-  justify-content: space-between;
-  width: 50px;
-  display: flex;
-  margin: 0 10px 0 0;
-  align-items: center;
-}
-
-.collapsible-header>div>.material-icons {
-  margin-right: 5px;
-}
 
 .tap-target-wrapper .tap-target {
   transform: translateY(600px);
 }
 
 .tap-target, .tap-target-wrapper {
-  height: 500px !important;
+  height: 450px !important;
 }
 
 .tap-target-wrapper.open .tap-target {
@@ -468,6 +477,61 @@ h1, h2, h3 {
   height: 40px;
 }
 
+.bg {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.filter_important{
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.important_select{
+  -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-right: 20px;
+  width: 40px;
+height: 40px;
+background: #3c3c3c;
+border-radius: 50%;
+transition:all 0.35s ease;
+}
+.bg>.bot_left, .bg>.top_right, .bg>.top_left {
+  border-radius: 15px;
+  background: #3c3c3c;
+  position: absolute;
+  width: 100px;
+  -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+.bg>.bot_left {
+  top: 400px;
+  left: -37px;
+  height: 200px;
+}
+
+.bg>.top_right {
+  right: -72px;
+  height: 40px;
+  top: 50px;
+}
+
+.bg>.top_left {
+  width: 109px;
+  height: 107px;
+  border-radius: 50px;
+  left: -48px;
+  top: -20px;
+}
+
 .tap-target-wave {
   display: none !important;
 }
@@ -478,7 +542,25 @@ h1, h2, h3 {
   height: 30px;
 }
 
+.time {
+  position: absolute;
+  top: 2px;
+  left: 26px;
+  font-weight: bold;
+}
+
+.camera {
+  border-radius: 0 0 10px 10px;
+  background: #3c3c3c;
+  height: 18px;
+  width: 30px;
+  top: 0;
+  position: absolute;
+  left: calc(50% - 15px);
+}
+
 .tap-target-wrapper .tap-target {
+      box-shadow: 0 0 20px #000;
   background: #3c3c3c;
   opacity: 1;
   border-radius: 50px;
@@ -502,6 +584,7 @@ h1, h2, h3 {
 .fixed_add {
   position: fixed;
   right: 2%;
+  z-index: 2;
   bottom: 5%;
   display: flex;
   justify-content: space-between;
@@ -592,7 +675,10 @@ img {
   -webkit-animation: smoky 15s both;
   animation: smoky 5s both;
 }
-
+.chosed_im{
+  width: 120px;
+border-radius: 20px;
+}
 .flex {
   display: flex;
 }
@@ -651,41 +737,23 @@ form .material-icons {
   position: relative;
 }
 
-#to_time {
+.ico_text_align, .time_ico {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+.ico_text_align i {
+  margin-right: 15px;
+  margin-left: 5px;
 }
 
 #to_time i {
   margin-right: 5px;
 }
 
-.collapsible-header .dropdown-trigger {
-  position: absolute;
-  right: 0%;
-}
-
 blockquote {
   border-left: 5px solid #009688;
   overflow: hidden !important;
-}
-
-.collapsible-header p {
-  display: inline;
-  white-space: normal;
-  margin: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: calc(100% - 100px);
-}
-
-.collapsible-header .dropdown-content li>a {
-  display: flex;
-  align-items: center;
-}
-
-.collapsible-header .dropdown-content li>a>i {
-  margin-right: 0px;
 }
 
 .on_progress {
@@ -703,6 +771,7 @@ blockquote {
 
 .collapsible-body {
   position: relative;
+  border: none;
 }
 
 #add_small_task {

@@ -17,28 +17,45 @@
 
 <body ng-controller="Main">
   <h1 class="logo_text">{{APPNAME}}</h1>
-  <div class="fixed_add">
 
+  <!-- На задньому фоні чоні плями -->
+  <div class="bg">
+    <div class="top_left"></div>
+    <div class="top_right"></div>
+    <div class="bot_left"></div>
+  </div>
+
+  <!-- Кнопки меню і добавити новий такск -->
+  <div class="fixed_add">
     <a ng-click="opendata()" id="create_btn" class="btn-floating btn-large waves-effect waves-plan btn modal-trigger white " href="#modal_create" ng-class="{'if_no_tasks_btn': no_tasks == true}">
-      <i class="material-icons " ng-class="{'plus_if_no_tasks': no_tasks == true}">
-        add
-      </i>
+      <i class="material-icons " ng-class="{'plus_if_no_tasks': no_tasks == true}"> add </i>
     </a>
     <a id="menu" onclick="$('.tap-target').tapTarget('open');" class="waves-effect waves-plan  white btn btn-floating"><i class="material-icons">menu</i></a>
     <div class="tap-target" data-target="menu">
-      <div ng-repeat="n in [0,1,2,3]" class="phone_btn pbtn{{$index+1}}"></div>
+      <div ng-repeat="n in [0,1,2,3]" class="phone_btn pbtn{{$index+1}} "></div>
       <div class="tap-target-content">
+        <div class="time">{{time | date: 'HH:mm'}}</div>
+        <div class="camera"></div>
       </div>
     </div>
   </div>
-  <a class='dropdown-trigger btn' href='#' data-target='sort_by'>Sort by</a>
+
+  <!-- Сортувати таски по -->
+  <!-- <a class='dropdown-trigger btn' href='#' data-target='sort_by'>Sort by</a>
   <ul id='sort_by' class='dropdown-content'>
     <li><a ng-click="sort_by_title()">Title</a></li>
     <li><a href="#!">Date</a></li>
     <li><a ng-click="sort_by_important()">Important</a></li>
-  </ul>
+  </ul> -->
+
+  <!-- кнопки навігації по важливості -->
+  <div class="filter_important">
+    <div class="important_select waves-effect waves-light btn bg-{{$index}} "  ng-click="select($index)" ng-class="{'chosed_im':chosed_im == $index}" ng-repeat="x in important"><span ng-show="chosed_im == $index">{{important[$index].im}}</span></div>
+  </div>
 
   <div class="container" id="main_container">
+
+    <!-- Блок коли немає тасків -->
     <div class="row no_task_available" ng-if="no_tasks == true">
       <div class="col s12 ">
         <div class="card-panel ">
@@ -48,19 +65,37 @@
         </div>
       </div>
     </div>
+
     <ul ng-show="no_tasks == false" class="collapsible " id="collapsible">
-      <li class=" li{{$index}}" ng-repeat="toDo in toDos track by $index">
-        <div class="collapsible-header">
-          <div class="text-{{important[toDo.important].cl}}">
-            <span class="flow-text"> {{important[toDo.important].sm}}</span>
-            <i class="material-icons">whatshot</i>
-          </div>
-          <p class="flow-text">{{toDo.title}}</p>
-          <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown{{$index}}'>
+
+      <li ng-hide="toDos[$index].important != chosed_im"  class="li{{$index}}  waves-effect waves-light"  ng-repeat="toDo in toDos track by $index" ng-class="{'bg-1': chosed_im == 1, 'bg-2': chosed_im == 2}">
+        <p class="ico_text_align">
+          <span class="time_ico">
+           <i class="material-icons"> subtitles </i>{{toDo.title}}
+         </span>
+       </p>
+
+
+          <p class="ico_text_align">
+            <span class="time_ico">
+              <i class="material-icons"> description </i>{{toDo.description}}
+            </span>
+          </p>
+        <p class="ico_text_align">
+<span class="time_ico flow-text">
+          <i class="material-icons"> date_range </i>
+          {{toDo.dueByDate? toDo.dueByDate: '∞' | date:'MMM dd, yyyy'}}
+</span>
+          <span class="time_ico flow-text">
+            <i class="material-icons"> access_time </i>
+            {{toDo.dueByTime? toDo.dueByTime: '---'}}
+            </span>
+        </p>
+        <!-- <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown{{$index}}'>
             <i class="material-icons">more_vert</i>
-          </a>
-          <!-- Dropdown Structure -->
-          <ul id='dropdown{{$index}}' class='dropdown-content'>
+          </a> -->
+        <!-- Dropdown Structure -->
+        <!-- <ul id='dropdown{{$index}}' class='dropdown-content'>
             <li><a class=" "><i class="material-icons">publish</i>publish</a></li>
             <li><a class=""><i class="material-icons">attach_file</i>pin</a></li>
             <li class="divider" tabindex="-1"></li>
@@ -80,21 +115,11 @@
                 delete
               </a>
             </li>
-          </ul>
-        </div>
-        <div class="collapsible-body">
-          <div class="row">
-            <label for="description_bq">Description of task:</label>
-            <blockquote id="#description_bq"> {{toDo.description}}</blockquote>
-          </div>
-          <div class="row">
-            <label for="to_time">Must be done by the:</label>
-            <p id="to_time">
-              <i class="material-icons">
-                access_time
-              </i>{{toDo.dueByDate | date:'MMM dd, yyyy'}} {{toDo.dueByTime}}
-            </p>
-          </div>
+          </ul> -->
+
+        <!-- <div class="collapsible-body">
+
+
           <div class="row">
             <label for="complete_task">To complete this task {{toDo.smaller_tasks.length? 'need end ' + toDo.smaller_tasks.length + ' Task': '' }}: </label>
 
@@ -107,7 +132,7 @@
           <div class="progress">
             <div class="determinate"></div>
           </div>
-        </div>
+        </div> -->
       </li>
     </ul>
 

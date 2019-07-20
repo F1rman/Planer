@@ -6,9 +6,14 @@ console.log(storage);
 var d = new Date();
 // ANGULAR
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
-app.run(($rootScope)=>{
+app.run(($rootScope, $interval) => {
   $rootScope.APPNAME = 'Planner';
   $rootScope.v = '0.1'
+  $rootScope.d = d;
+  $interval(function() {
+    $rootScope.time = new Date()
+  }, 17); // every 17 milliseconds just to spiced it up a bit.
+
   console.log($rootScope.v);
 })
 
@@ -21,29 +26,26 @@ app.controller('Main', function($scope) {
 
   $scope.storage = storage;
   $scope.important = [{
-      'im': 'Hight Priority',
-      'cl': 'red',
+      'im': 'Important',
+      'cl': '0',
       'sm': '!!!'
     },
     {
-      'im': 'Medium Priority',
-      'cl': 'yellow',
+      'im': 'Medium',
+      'cl': '1',
       'sm': '!!'
     },
     {
-      'im': 'Low Priority',
-      'cl': 'blue',
+      'im': 'Low',
+      'cl': '2',
       'sm': '!'
     },
-    {
-      'im': 'No Priority',
-      'cl': 'black',
-      'sm': ''
-    }
   ]
+  $scope.chosed_im = 0;
   $scope.select = (a) => {
     $scope.num_task = a;
     $scope.priority = a;
+    $scope.chosed_im = a;
     console.log(a, 'Selected item');
     $scope.editToDoTitle = $scope.toDos[a].title;
     $scope.editToDoDescription = $scope.toDos[a].description;
@@ -51,12 +53,12 @@ app.controller('Main', function($scope) {
     $scope.editformDueTime = $scope.toDos[a].dueByTime;
     $('#important_edit').value = $scope.toDos[a].important;
   }
-$scope.clearInput = (a,b,c,d,e)=>{
-  a='',b='',c='',d='',e='';
-}
+  $scope.clearInput = (a, b, c, d, e) => {
+    a = '', b = '', c = '', d = '', e = '';
+  }
   var titleToDo = '';
-  var titleToDo_arr=[];
-$scope.sort_by_title=()=>{
+  var titleToDo_arr = [];
+  $scope.sort_by_title = () => {
     $scope.toDos.sort(function(a, b) {
       var nameA = a.title.toUpperCase(); // ignore upper and lowercase
       var nameB = b.title.toUpperCase(); // ignore upper and lowercase
@@ -69,12 +71,14 @@ $scope.sort_by_title=()=>{
 
       return 0;
     });
-}
-$scope.sort_by_important=()=>{
-  $scope.toDos.sort(function(a, b){
-    return a.important-b.important
-})
-}
+  }
+  $scope.sort_by_important = () => {
+    $scope.toDos.sort(function(a, b) {
+      return a.important - b.important
+    })
+  }
+
+
   function check_if_have_tasks_storage() {
     $scope.toDos = JSON.parse(storage.getItem('tasks'));
     if ($scope.toDos == null) {
@@ -100,7 +104,9 @@ $scope.sort_by_important=()=>{
     $scope.toDos[a].important = $('#important_edit').val();
     refresh_stor($scope.toDos)
     check_if_have_tasks_storage()
-    M.toast({html: 'Task successfuly changed'})
+    M.toast({
+      html: 'Task successfuly changed'
+    })
   }
 
 
@@ -123,7 +129,9 @@ $scope.sort_by_important=()=>{
     $scope.formToDoDescription = '';
     $scope.formDueDate = '';
     $scope.formDueTime = '';
-    M.toast({html: 'Task successfuly created'})
+    M.toast({
+      html: 'Task successfuly created'
+    })
 
   };
 
@@ -151,7 +159,7 @@ $scope.sort_by_important=()=>{
     });
 
     refresh_stor($scope.toDos);
-    $scope.clearInput($scope.title_small,$scope.description_small,$scope.dueByDate_small,$scope.dueByTime_small)
+    $scope.clearInput($scope.title_small, $scope.description_small, $scope.dueByDate_small, $scope.dueByTime_small)
 
   };
 
@@ -245,33 +253,33 @@ $scope.sort_by_important=()=>{
     M.AutoInit();
     $('.datepicker').datepicker({
       'container': $('.data'),
-        'minDate': d,
-        'showDaysInNextAndPreviousMonths':true,
-        'onSelect' : (a)=>{
-          $scope.formDueDate = a;
-        }
-  })
-  $('.timepicker').timepicker({
-    'twelveHour': false,
-    'onSelect' : (b,c)=>{
-      $scope.formDueTime = b +':' + c;
+      'minDate': d,
+      'showDaysInNextAndPreviousMonths': true,
+      'onSelect': (a) => {
+        $scope.formDueDate = a;
+      }
+    })
+    $('.timepicker').timepicker({
+      'twelveHour': false,
+      'onSelect': (b, c) => {
+        $scope.formDueTime = b + ':' + c;
+      }
+    });
+    $scope.opentime = () => {
+      $scope.change_ico = true;
+
+      $('.datepicker-modal').hide()
+      $('.timepicker-modal').show()
+
+
     }
-  });
-  $scope.opentime=()=>{
-    $scope.change_ico = true;
-
-    $('.datepicker-modal').hide()
-    $('.timepicker-modal').show()
-
-
-  }
-    $scope.opendata = ()=>{
-        $scope.change_ico = false;
-          $('.timepicker').timepicker('open');
-     $('.datepicker').datepicker('open');
-     $('.timepicker-modal').hide()
-     $('.datepicker-modal').show()
-       }
+    $scope.opendata = () => {
+      $scope.change_ico = false;
+      $('.timepicker').timepicker('open');
+      $('.datepicker').datepicker('open');
+      $('.timepicker-modal').hide()
+      $('.datepicker-modal').show()
+    }
 
 
     $scope.$watch('toDos', () => {
