@@ -81,12 +81,18 @@ h2 {
 }
 
 .no_task_available {
-  position: absolute;
+  position: relative;
   width: 100%;
   left: 10%;
   top: 15%;
 }
+.tap-target .btn{
 
+  border-radius: 25px;
+  background: #fff;
+  color: #3c3c3c;
+  font-weight: bold;
+}
 .no_task_available .card-panel {
   background: #979797;
   border-radius: 100px 0 0 100px;
@@ -513,9 +519,11 @@ transition:all 0.35s ease;
 }
 
 .bg>.bot_left {
-  top: 400px;
-  left: -37px;
-  height: 200px;
+  bottom: -112px;
+  left: 120px;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
 }
 
 .bg>.top_right {
@@ -544,19 +552,41 @@ transition:all 0.35s ease;
 
 .time {
   position: absolute;
-  top: 2px;
-  left: 26px;
+  top: 5px;
+  left: 30px;
   font-weight: bold;
+  color: #fff;
 }
 
-.camera {
-  border-radius: 0 0 10px 10px;
-  background: #3c3c3c;
-  height: 18px;
-  width: 30px;
-  top: 0;
+.speaker {
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  border-radius: 10px;
+  background: #f0f0f0;
+  height: 10px;
+  width: 76px;
+  top: -17px;
+  overflow: hidden;
   position: absolute;
-  left: calc(50% - 15px);
+  left: calc(50% - 38px);
+}
+.camera{
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  border-radius: 50%;
+  display: flex;
+  background: #c0c0c0;
+  height: 15px;
+  width: 15px;
+  top: -20px;
+  position: absolute;
+  left: calc(50% + 55px);
+  justify-content: center;
+  align-items: center;
+}
+.camera .inside_cam{
+  height: 5px;
+  width: 5px;
+  background: #5e8156;
+  border-radius: 50%;
 }
 
 .tap-target-wrapper .tap-target {
@@ -567,14 +597,66 @@ transition:all 0.35s ease;
   position: relative;
   overflow: visible;
 }
+.btn_group{
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+.tap-target .soc_group .btn{
+  width: 40px;
+  height: 40px;
+  margin: 0 10px 0 0;
+  padding: 0;
+}
 
+.hiden_text{
+  width: 0;
+  visibility: hidden;
+}
+.soc_group{
+  display: flex;
+  align-items: center;
+}
+.soc_group .btn.soc_active{
+  width: 142px;
+  border-radius: 50px;
+  display: flex;
+  transition: all .3s linear;
+  overflow: hidden;
+  padding: 0;
+}
+.ico{
+  display: flex;
+  height: 40px;
+  width: 40px;
+  background-size: 100% !important;
+  flex: none;
+  border-radius: 50%;
+
+}
+.soc_active .hiden_text{
+display: flex;
+align-items: center;
+visibility: visible;
+margin: 5px;
+width: 100%;
+}
+.btn_group .btn{
+  display: flex;
+  margin-bottom: 15px;
+}
+.tap-target-content .btn i{
+  margin-right: 15px;
+}
 .tap-target-content {
   width: 92% !important;
+      padding: 50px 25px !important;
   height: 95% !important;
   border-radius: 40px;
   left: 4% !important;
-  background: #fff;
-  top: 2.5% !important;
+  background: rgb(176,176,176);
+background: linear-gradient(90deg, rgba(176,176,176,1) 0%, rgba(131,131,131,1) 9%, rgba(131,131,131,1) 93%, rgba(176,176,176,1) 100%);
+  top: 5.5% !important;
   right: 0px !important;
   bottom: 0px !important;
   position: absolute;
@@ -592,7 +674,7 @@ transition:all 0.35s ease;
   flex-flow: column;
 }
 
-.fixed_add a {
+.fixed_add > a {
   width: 50px !important;
   height: 50px !important;
   display: flex;
@@ -619,8 +701,9 @@ transition:all 0.35s ease;
   width: 95% !important;
 }
 
-.if_no_tasks_btn {
+.fixed_add  .if_no_tasks_btn {
   top: 50%;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   width: 112px !important;
@@ -696,7 +779,7 @@ ul:not(.browser-default) {
   display: none;
 }
 
-#modal_create, #modal_edit, #modal_create_small_tasks {
+#modal_create, #modal_edit, #modal_create_small_tasks, #task_modal {
   transform: none !important;
   width: 100% !important;
   overflow: hidden;

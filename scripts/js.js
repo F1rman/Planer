@@ -23,7 +23,35 @@ app.controller('Main', function($scope) {
   var task_color = 'red lighten-3';
 
 
-
+  $scope.menu = [{
+      'modal': 'Info',
+      'ico': 'info'
+    },
+    {
+      'modal': 'About us',
+        'ico': 'account_circle'
+    },
+    {
+      'modal':'Privacy Policy',
+        'ico': 'verified_user'
+      }
+  ]
+  $scope.soc = [{
+      'name': 'Instafly',
+      'ico': 'instafly.png',
+      'href': 'https://play.google.com/store/apps/details?id=com.verblike.promofly&hl=en_US'
+    },
+    {
+      'name': 'Verblike',
+        'ico': 'v.svg',
+        'href': 'https://verblike.com/'
+    },
+    {
+      'name':'Telegram',
+        'ico': 't.jpg',
+        'href': 'https://web.telegram.org/#/im?p=@verbalike'
+      }
+  ]
   $scope.storage = storage;
   $scope.important = [{
       'im': 'Important',
@@ -42,16 +70,26 @@ app.controller('Main', function($scope) {
     },
   ]
   $scope.chosed_im = 0;
+  $scope.open = (a) => {
+    $scope.datail_task = a;
+  }
+  $scope.soc_select = (a) => {
+    $scope.soc_num = a;
+  }
+  $scope.show_no_tasks=[]
+  $scope.show_no_tasks[1]= false;
+  $scope.show_no_tasks[2]= false;
+  $scope.show_no_tasks[0]= false;
   $scope.select = (a) => {
     $scope.num_task = a;
     $scope.priority = a;
     $scope.chosed_im = a;
-    console.log(a, 'Selected item');
-    $scope.editToDoTitle = $scope.toDos[a].title;
-    $scope.editToDoDescription = $scope.toDos[a].description;
-    $scope.editattedDate = $scope.toDos[a].dueByDate;
-    $scope.editformDueTime = $scope.toDos[a].dueByTime;
-    $('#important_edit').value = $scope.toDos[a].important;
+
+    // $scope.editToDoTitle = $scope.toDos[a].title;
+    // $scope.editToDoDescription = $scope.toDos[a].description;
+    // $scope.editattedDate = $scope.toDos[a].dueByDate;
+    // $scope.editformDueTime = $scope.toDos[a].dueByTime;
+    // $('#important_edit').value = $scope.toDos[a].important;
   }
   $scope.clearInput = (a, b, c, d, e) => {
     a = '', b = '', c = '', d = '', e = '';
@@ -72,6 +110,8 @@ app.controller('Main', function($scope) {
       return 0;
     });
   }
+
+
   $scope.sort_by_important = () => {
     $scope.toDos.sort(function(a, b) {
       return a.important - b.important
@@ -95,7 +135,13 @@ app.controller('Main', function($scope) {
   }
   check_if_have_tasks_storage()
 
-
+  $scope.sort_by_date = ()=>{
+      $scope.toDos.sort(function(a, b) {
+      var dateA = new Date(a.dueByDate), dateB = new Date(b.dueByDate);
+      return dateA - dateB;
+  })
+}
+  $scope.sort_by_date()
   $scope.changeTodo = (a) => {
     $scope.toDos[a].title = $scope.editToDoTitle;
     $scope.toDos[a].description = $scope.editToDoDescription;
@@ -109,11 +155,14 @@ app.controller('Main', function($scope) {
     })
   }
 
-
   $scope.addToDo = function() {
     if ($scope.formToDoTitle == undefined || $scope.formToDoTitle == null || $scope.formToDoTitle == '') {
       $scope.formToDoTitle = "Default title"
     }
+    if ($scope.formDueDate==undefined) {
+        $scope.formDueDate =  d.getFullYear()+10+'-07-23T21:00:00.000Z';
+    }
+
     $scope.toDos.push({
       title: $scope.formToDoTitle,
       description: $scope.formToDoDescription,
@@ -136,22 +185,21 @@ app.controller('Main', function($scope) {
   };
 
   function check_smaller_task() {
-    check_if_have_tasks_storage()
-    var sm_tasks = JSON.parse(storage.getItem('tasks'))[$scope.num_task].smaller_tasks
+    var sm_tasks = $scope.toDos[$scope.datail_task].smaller_tasks
     if (sm_tasks == undefined || sm_tasks == null || sm_tasks == '[]') {
-      $scope.toDos[$scope.num_task].smaller_tasks = []
+      $scope.toDos[$scope.datail_task].smaller_tasks = []
       $scope.no_smaller_tasks = true;
       console.log(sm_tasks == undefined || sm_tasks == null || sm_tasks == '[]');
     } else {
-      sm_tasks = JSON.parse(storage.getItem('tasks'))[$scope.num_task].smaller_tasks
+      sm_tasks = JSON.parse(storage.getItem('tasks'))[$scope.datail_task].smaller_tasks
     }
   }
 
   // console.log(sm_tasks);
   $scope.addSmallTasks = function() {
     check_smaller_task()
-    console.log($scope.toDos[$scope.num_task].smaller_tasks);
-    $scope.toDos[$scope.num_task].smaller_tasks.push({
+    console.log($scope.toDos[$scope.datail_task].smaller_tasks);
+    $scope.toDos[$scope.datail_task].smaller_tasks.push({
       title_small: $scope.formToDoTitle_small,
       description_small: $scope.formToDoDescription_small,
       dueByDate_small: $scope.formDueDate_small,
@@ -163,7 +211,7 @@ app.controller('Main', function($scope) {
 
   };
 
-
+  // Видалення таска
   $scope.removeToDo = function(toDo) {
     $('.li' + $scope.toDos.indexOf(toDo)).slideUp();
     del_task_timer = setTimeout(() => {
@@ -190,6 +238,7 @@ app.controller('Main', function($scope) {
     });
   };
 
+  // для збереженняя в localStorage
   function refresh_stor(a) {
     storage.setItem('tasks', JSON.stringify(a));
   }

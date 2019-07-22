@@ -35,61 +35,68 @@
       <div ng-repeat="n in [0,1,2,3]" class="phone_btn pbtn{{$index+1}} "></div>
       <div class="tap-target-content">
         <div class="time">{{time | date: 'HH:mm'}}</div>
-        <div class="camera"></div>
+        <div class="speaker"></div>
+        <div class="camera">
+          <div class="inside_cam"></div>
+        </div>
+        <div class="btn_group">
+          <div ng-repeat="d in menu" class="btn waves-effect waves-plan"><i class="material-icons">{{menu[$index].ico}}</i><span>{{menu[$index].modal}}</span></div>
+        </div>
+        <div class="soc_group">
+          <div class="btn soc_btn waves-effect waves-plan" ng-click="soc_select($index)" ng-class="{'soc_active': soc_num == $index}" ng-repeat="g in soc">
+            <div style="background:url(img/{{soc[$index].ico}})" class="ico"></div>
+            <a class="hiden_text" href="{{soc[$index].href}}">{{soc[$index].name}}</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Сортувати таски по -->
-  <!-- <a class='dropdown-trigger btn' href='#' data-target='sort_by'>Sort by</a>
+  <a class='dropdown-trigger btn' href='#' data-target='sort_by'>Sort by</a>
   <ul id='sort_by' class='dropdown-content'>
     <li><a ng-click="sort_by_title()">Title</a></li>
-    <li><a href="#!">Date</a></li>
+    <li><a ng-click="sort_by_date()">Date</a></li>
     <li><a ng-click="sort_by_important()">Important</a></li>
-  </ul> -->
+  </ul>
 
   <!-- кнопки навігації по важливості -->
   <div class="filter_important">
-    <div class="important_select waves-effect waves-light btn bg-{{$index}} "  ng-click="select($index)" ng-class="{'chosed_im':chosed_im == $index}" ng-repeat="x in important"><span ng-show="chosed_im == $index">{{important[$index].im}}</span></div>
+    <div class="important_select waves-effect waves-light btn bg-{{$index}} " ng-click="select($index)" ng-class="{'chosed_im':chosed_im == $index}" ng-repeat="x in important"><span ng-show="chosed_im == $index">{{important[$index].im}}</span></div>
   </div>
 
   <div class="container" id="main_container">
-
     <!-- Блок коли немає тасків -->
-    <div class="row no_task_available" ng-if="no_tasks == true">
-      <div class="col s12 ">
-        <div class="card-panel ">
-          <span class="align-center flow-text">
-            No Tasks Available
-          </span>
-        </div>
-      </div>
-    </div>
 
-    <ul ng-show="no_tasks == false" class="collapsible " id="collapsible">
+    <ul  class="collapsible " id="collapsible">
+      <li class="waves-effect waves-light no_task_available" ng-show='show_no_tasks[0] == true'   ng-class="{'bg-1': chosed_im == 1,'bg-0': chosed_im == 0, 'bg-2': chosed_im == 2}">
+        <span class="flow-text">
+          No Tasks {{important[chosed_im].im}}
+        </span>
+      </li>
+      <li ng-hide="toDos[$index].important != chosed_im" data-target="task_modal" ng-click="open($index)" class="li{{$index}} modal-trigger waves-effect waves-light " ng-repeat="toDo in toDos track by $index"
+        ng-class="{'bg-1': chosed_im == 1, 'bg-2': chosed_im == 2}">
 
-      <li ng-hide="toDos[$index].important != chosed_im"  class="li{{$index}}  waves-effect waves-light"  ng-repeat="toDo in toDos track by $index" ng-class="{'bg-1': chosed_im == 1, 'bg-2': chosed_im == 2}">
         <p class="ico_text_align">
           <span class="time_ico">
-           <i class="material-icons"> subtitles </i>{{toDo.title}}
-         </span>
-       </p>
+            <i class="material-icons"> subtitles </i>{{toDo.title}}
+          </span>
+        </p>
 
-
-          <p class="ico_text_align">
-            <span class="time_ico">
-              <i class="material-icons"> description </i>{{toDo.description}}
-            </span>
-          </p>
         <p class="ico_text_align">
-<span class="time_ico flow-text">
-          <i class="material-icons"> date_range </i>
-          {{toDo.dueByDate? toDo.dueByDate: '∞' | date:'MMM dd, yyyy'}}
-</span>
+          <span class="time_ico">
+            <i class="material-icons"> description </i>{{toDo.description}}
+          </span>
+        </p>
+        <p class="ico_text_align">
+          <span class="time_ico flow-text">
+            <i class="material-icons"> date_range </i>
+            {{toDo.dueByDate? toDo.dueByDate: '∞' | date:'MMM dd, yyyy'}}
+          </span>
           <span class="time_ico flow-text">
             <i class="material-icons"> access_time </i>
             {{toDo.dueByTime? toDo.dueByTime: '---'}}
-            </span>
+          </span>
         </p>
         <!-- <a class='dropdown-trigger ' href='#' id="dropdown-trigger{{$index}}" data-target='dropdown{{$index}}'>
             <i class="material-icons">more_vert</i>
@@ -197,19 +204,13 @@
   </div>
 
 
-
-
-  <!-- Modal bottom Small tasks-->
-  <div id="modal-bottom" class="modal bottom-sheet">
-    <div class="container">
-      <h2 class="flow-text h2_small_tasks align-center">{{toDos[num_task].title}}</h2>
-
-      <a id="add_small_task" class="btn-floating btn-large waves-effect waves-light btn modal-trigger teal " href="#modal_create_small_tasks" ng-class="{'if_no_tasks_btn': toDos[num_task].smaller_tasks == null}">
-        <i class="material-icons" ng-class="{'plus_if_no_tasks': no_tasks == true}">
-          add
-        </i>
+  <div id="task_modal" class="modal">
+    <div class="modal-content">
+      <h2 class="flow-text">{{toDos[datail_task].title}}</h2>
+      <a ng-click="opendata()" id="add_small_task" class="btn-floating btn-large waves-effect waves-plan btn modal-trigger white " href="#modal_create_small_tasks" ng-class="{'if_no_tasks_btn': toDos[num_task].smaller_tasks == null}">
+        <i class="material-icons " ng-class="{'plus_if_no_tasks': no_tasks == true}"> add </i>
       </a>
-      <div class="row " ng-show="toDos[num_task].smaller_tasks == null">
+      <div class="row " ng-show="toDos[datail_task].smaller_tasks == null">
         <div class="col s12 ">
           <div class="card-panel ">
             <span class="align-center">
@@ -218,8 +219,9 @@
           </div>
         </div>
       </div>
-      <ul ng-hide="toDos[num_task].smaller_tasks == null" class="collapsible ">
-        <li class="active li{{$index}}" ng-repeat="f in toDos[num_task].smaller_tasks track by $index">
+
+      <ul ng-hide="toDos[datail_task].smaller_tasks == null" class="collapsible ">
+        <li class="active li{{$index}}" ng-repeat="f in toDos[datail_task].smaller_tasks track by $index">
           <div class="collapsible-header">
 
             <p class="flow-text">{{f.title_small}}</p>
