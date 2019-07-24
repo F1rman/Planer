@@ -151,9 +151,19 @@ h2 {
   overflow-y: scroll;
   max-height: 50vh;
 }
-
-#collapsible li {
-  box-shadow: 0 0 20px #000 !important;
+.small_task_li{
+  background: white;
+  color: #000;
+  border-radius: 30px;
+  flex: none;
+  padding: 15px;
+  width: 70%;
+  overflow: hidden;
+  margin: 30px 0;
+  margin-right: 20px;
+}
+#collapsible li, .task_ul {
+  box-shadow: 0 0 5px #000 !important;
   color: white;
   padding: 10px 50px 10px 30px;
   background: #3c3c3c;
@@ -166,6 +176,15 @@ h2 {
   margin-bottom: 20px;
   flex-flow: column;
   justify-content: flex-start;
+}
+.scroll_small_tasks{
+  width: 100%;
+  overflow-x: scroll;
+  display: flex;
+}
+.task_ul{
+  padding: 20px  !important;
+  width: auto !important;
 }
 #collapsible li p {
   margin: 5px 0;
@@ -248,7 +267,7 @@ h2 {
   max-width: 100% !important;
 }
 
-#modal_create .modal-overlay {
+#modal_create .modal-overlay, #modal_create_small_tasks .modal-overlay{
   display: none !important;
 }
 
@@ -276,18 +295,15 @@ h2 {
   margin: 0;
 }
 
-#modal_create .btn-floating {
+#modal_create .btn-floating , #modal_create_small_tasks .btn-floating{
   display: flex;
   justify-content: center;
   align-items: center;
   transform: rotate(-90deg);
 }
 
-#modal_create .btn_close {
-  transform: rotate(90deg);
-}
 
-#modal_create .input-field {
+#modal_create .input-field , #modal_create_small_tasks .input-field{
   font-weight: bold;
   width: 100%;
   margin-left: auto;
@@ -306,7 +322,7 @@ h2 {
   transition: all .3s linear;
 }
 
-#modal_create textarea:focus {
+#modal_create textarea:focus, #modal_create_small_tasks textarea:focus {
   background: #3c3c3c;
   border-bottom: none !important;
   -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2) !important;
@@ -315,7 +331,7 @@ h2 {
   transition: all .3s linear;
 }
 
-#modal_create .input-field:focus, #modal_create textarea:focus {
+#modal_create .input-field:focus, #modal_create textarea:focus, #modal_create_small_tasks .input-field:focus, #modal_create_small_tasks textarea:focus  {
   background: #3c3c3c;
   border-bottom: none !important;
   -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2) !important;

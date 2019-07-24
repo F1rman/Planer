@@ -8,7 +8,7 @@ var d = new Date();
 var app = angular.module("Routing", ["ngRoute", 'ngAnimate']);
 app.run(($rootScope, $interval) => {
   $rootScope.APPNAME = 'Planner';
-  $rootScope.v = '0.1'
+  $rootScope.v = '0.2'
   $rootScope.d = d;
   $interval(function() {
     $rootScope.time = new Date()
@@ -300,45 +300,63 @@ app.controller('Main', function($scope) {
     ];
 
     M.AutoInit();
-    $('.datepicker').datepicker({
-      'container': $('.data'),
+    // $('#modal_create_small_tasks .datepicker').datepicker({
+    //   'container': $('#modal_create_small_tasks .data'),
+    //   'minDate': d,
+    //   'showDaysInNextAndPreviousMonths': true,
+    //   'onSelect': (a) => {
+    //     $scope.formDueDate = a;
+    //   }
+    // })
+    // $('#modal_create_small_tasks .timepicker').timepicker({
+    //   'twelveHour': false,
+    //   'onSelect': (b, c) => {
+    //     $scope.formDueTime = b + ':' + c;
+    //   }
+    // });
+    $('#modal_create .datepicker').datepicker({
+      'container': $('#modal_create .data'),
       'minDate': d,
       'showDaysInNextAndPreviousMonths': true,
       'onSelect': (a) => {
         $scope.formDueDate = a;
       }
     })
-    $('.timepicker').timepicker({
+    $('#modal_create .timepicker').timepicker({
       'twelveHour': false,
       'onSelect': (b, c) => {
         $scope.formDueTime = b + ':' + c;
       }
     });
-    $scope.opentime = () => {
+    $scope.opentime = (ifsmall) => {
+      console.log(ifsmall== 'big');
       $scope.change_ico = true;
+      if (ifsmall='small') {
+        $('#modal_create_small_tasks .datepicker-modal').hide()
+        $('#modal_create_small_tasks .timepicker-modal').show()
+      }
+        $('#modal_create .datepicker-modal').hide()
+        $('#modal_create .timepicker-modal').show()
 
-      $('.datepicker-modal').hide()
-      $('.timepicker-modal').show()
+      }
 
 
-    }
-    $scope.opendata = () => {
+
+    $scope.opendata = (ifsmall) => {
       $scope.change_ico = false;
-      $('.timepicker').timepicker('open');
-      $('.datepicker').datepicker('open');
-      $('.timepicker-modal').hide()
-      $('.datepicker-modal').show()
-    }
+      console.log(ifsmall);
+      if (ifsmall='small') {
+        $('#modal_create_small_tasks .datepicker-modal').hide()
+        $('#modal_create_small_tasks .timepicker-modal').show()
+      }
+        $('#modal_create .timepicker').timepicker('open');
+        $('#modal_create .datepicker').datepicker('open');
+        $('#modal_create .timepicker-modal').hide()
+        $('#modal_create .datepicker-modal').show()
 
 
-    $scope.$watch('toDos', () => {
-      setTimeout(() => {
-        $('.dropdown-trigger').dropdown()
-      }, 100)
+}
 
-
-
-    })
 
   });
 
